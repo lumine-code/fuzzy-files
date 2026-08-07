@@ -1,6 +1,8 @@
 {
   "atom-workspace": {
-    "ctrl-p": "fuzzy-files:toggle"
+    // A cross-editor convention, so it keeps ctrl- rather than moving
+    // into the alt- tier. cmdorctrl- because a raw ctrl- has no macOS story.
+    "cmdorctrl-p": "fuzzy-files:toggle"
   },
   ".fuzzy-files atom-text-editor[mini]": {
     "alt-enter": "fuzzy-files:open-external",
@@ -10,15 +12,16 @@
     "alt-right": "fuzzy-files:split-right",
     "alt-up": "fuzzy-files:split-up",
     "alt-down": "fuzzy-files:split-down",
+    // `alt-v` and `alt-c` are chord prefixes only. Binding a prefix as a
+    // complete keystroke as well makes every press wait out the 1000 ms
+    // partial-match timeout before the default variant fires.
+    "alt-v alt-r": "fuzzy-files:insert-relative-path",
     "alt-v alt-p": "fuzzy-files:insert-project-path",
     "alt-v alt-a": "fuzzy-files:insert-absolute-path",
-    "alt-v": "fuzzy-files:insert-relative-path",
-    "alt-v alt-r": "fuzzy-files:insert-relative-path",
     "alt-v alt-n": "fuzzy-files:insert-file-name",
+    "alt-c alt-r": "fuzzy-files:copy-relative-path",
     "alt-c alt-p": "fuzzy-files:copy-project-path",
     "alt-c alt-a": "fuzzy-files:copy-absolute-path",
-    "alt-c": "fuzzy-files:copy-relative-path",
-    "alt-c alt-r": "fuzzy-files:copy-relative-path",
     "alt-c alt-n": "fuzzy-files:copy-file-name",
     "alt-0": "fuzzy-files:use-default-separator",
     "alt-/": "fuzzy-files:use-forward-slashes",

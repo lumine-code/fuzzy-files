@@ -25,7 +25,10 @@ describe("fuzzy-files item actions", () => {
     expect(openExternal.keystrokes).toEqual(["alt-enter"]);
 
     const insertRelative = byCommand.get("fuzzy-files:insert-relative-path");
-    expect([...insertRelative.keystrokes].sort()).toEqual(["alt-v", "alt-v alt-r"]);
+    // `alt-v` is a chord prefix and nothing else. Binding it as a complete
+    // keystroke too made every press sit out the 1000 ms partial-match timeout
+    // before the default variant fired.
+    expect([...insertRelative.keystrokes].sort()).toEqual(["alt-v alt-r"]);
 
     // Every action explains itself with more than a restated title.
     for (const action of actions) {
