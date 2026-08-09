@@ -66,4 +66,15 @@ describe("fuzzy-files item actions", () => {
     expect(main.selectList.isVisible()).toBeTruthy();
     expect(main.selectList.itemActionsList.isVisible()).toBeFalsy();
   });
+
+  it("trashes the selected item through the shell service", async () => {
+    spyOn(main.selectList, "getSelectedItem").and.returnValue({ aPath: __filename });
+    spyOn(atom.shell, "trashItem").and.returnValue(Promise.resolve());
+    spyOn(atom.notifications, "addSuccess");
+
+    await main.performAction("trash");
+
+    expect(atom.shell.trashItem).toHaveBeenCalledWith(__filename);
+    expect(atom.notifications.addSuccess).toHaveBeenCalled();
+  });
 });
