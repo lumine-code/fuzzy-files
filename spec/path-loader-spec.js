@@ -27,9 +27,9 @@ describe("fuzzy-files path loader", () => {
 
   beforeEach(() => {
     dir = buildFixture();
-    atom.project.setPaths([dir]);
-    atom.config.set("fuzzy-files.ignoredNames", []);
-    atom.config.set("core.ignoredNames", []);
+    lumine.project.setPaths([dir]);
+    lumine.config.set("fuzzy-files.ignoredNames", []);
+    lumine.config.set("core.ignoredNames", []);
   });
 
   it("collects every file under the project roots", async () => {
@@ -40,7 +40,7 @@ describe("fuzzy-files path loader", () => {
   });
 
   it("applies the package's own ignored names on top of the editor's", async () => {
-    atom.config.set("fuzzy-files.ignoredNames", ["vendor"]);
+    lumine.config.set("fuzzy-files.ignoredNames", ["vendor"]);
     const rels = relativize(dir, await load());
 
     expect(rels.has("visible.txt")).toBe(true);

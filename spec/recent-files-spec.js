@@ -10,13 +10,13 @@ describe("fuzzy-files recent files", () => {
     for (const name of ["alpha.txt", "beta.txt", "gamma.txt"]) {
       fs.writeFileSync(path.join(dir, name), `${name}\n`);
     }
-    atom.project.setPaths([dir]);
-    atom.config.set("fuzzy-files.recentCount", 10);
-    workspaceElement = atom.views.getView(atom.workspace);
+    lumine.project.setPaths([dir]);
+    lumine.config.set("fuzzy-files.recentCount", 10);
+    workspaceElement = lumine.views.getView(lumine.workspace);
     jasmine.attachToDOM(workspaceElement);
 
-    const activation = atom.packages.activatePackage("fuzzy-files");
-    atom.commands.dispatch(workspaceElement, "fuzzy-files:toggle");
+    const activation = lumine.packages.activatePackage("fuzzy-files");
+    lumine.commands.dispatch(workspaceElement, "fuzzy-files:toggle");
     main = (await activation).mainModule;
     await new Promise((resolve, reject) => {
       main.cache((error) => (error ? reject(error) : resolve()));
@@ -26,7 +26,7 @@ describe("fuzzy-files recent files", () => {
   });
 
   afterEach(async () => {
-    await atom.packages.deactivatePackage("fuzzy-files");
+    await lumine.packages.deactivatePackage("fuzzy-files");
   });
 
   function itemNamed(name) {
@@ -35,13 +35,13 @@ describe("fuzzy-files recent files", () => {
 
   async function showList() {
     main.selectList.show();
-    await atom.views.getNextUpdatePromise();
+    await lumine.views.getNextUpdatePromise();
     return main.selectList;
   }
 
   it("remembers opened files and separates them from the ordinary results", async () => {
     const beta = itemNamed("beta.txt");
-    const open = spyOn(atom.workspace, "open").and.returnValue(Promise.resolve());
+    const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
     const selectList = await showList();
     await selectList.selectItem(beta);
 
@@ -59,20 +59,20 @@ describe("fuzzy-files recent files", () => {
     expect(separator.nextElementSibling.textContent).not.toContain("beta.txt");
 
     selectList.refs.queryEditor.setText("alpha");
-    await atom.views.getNextUpdatePromise();
+    await lumine.views.getNextUpdatePromise();
     expect(selectList.getIdForItem(beta)).toBeNull();
     expect(selectList.element.querySelector(".select-list-separator")).toBeNull();
 
     selectList.refs.queryEditor.setText("");
-    await atom.views.getNextUpdatePromise();
-    atom.commands.dispatch(workspaceElement, "fuzzy-files:clear-recent");
-    await atom.views.getNextUpdatePromise();
+    await lumine.views.getNextUpdatePromise();
+    lumine.commands.dispatch(workspaceElement, "fuzzy-files:clear-recent");
+    await lumine.views.getNextUpdatePromise();
     expect(main.recentlyUsed).toEqual([]);
     expect(selectList.element.querySelector(".select-list-separator")).toBeNull();
   });
 
   it("caps recent files at the configured count", () => {
-    atom.config.set("fuzzy-files.recentCount", 2);
+    lumine.config.set("fuzzy-files.recentCount", 2);
     main.recordRecent(itemNamed("alpha.txt"));
     main.recordRecent(itemNamed("beta.txt"));
     main.recordRecent(itemNamed("gamma.txt"));

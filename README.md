@@ -18,7 +18,7 @@ To install `fuzzy-files` search for _fuzzy-files_ in the Install pane of the Lum
 
 ## Commands
 
-Commands available in `atom-workspace`:
+Commands available in `lumine-workspace`:
 
 - `fuzzy-files:toggle`: toggle the fuzzy files panel,
 - `fuzzy-files:refresh`: refresh the file cache,

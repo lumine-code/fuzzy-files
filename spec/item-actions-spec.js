@@ -2,17 +2,17 @@ describe("fuzzy-files item actions", () => {
   let main;
 
   beforeEach(async () => {
-    jasmine.attachToDOM(atom.views.getView(atom.workspace));
+    jasmine.attachToDOM(lumine.views.getView(lumine.workspace));
     // The package activates on its commands, so dispatch one to trigger it;
     // activation also loads the package keymap the actions list reads.
-    const activation = atom.packages.activatePackage("fuzzy-files");
-    atom.commands.dispatch(atom.views.getView(atom.workspace), "fuzzy-files:toggle");
+    const activation = lumine.packages.activatePackage("fuzzy-files");
+    lumine.commands.dispatch(lumine.views.getView(lumine.workspace), "fuzzy-files:toggle");
     main = (await activation).mainModule;
     main.selectList.hide();
   });
 
   afterEach(async () => {
-    await atom.packages.deactivatePackage("fuzzy-files");
+    await lumine.packages.deactivatePackage("fuzzy-files");
   });
 
   it("derives its actions from the command registrations and the keymap", () => {
@@ -50,7 +50,7 @@ describe("fuzzy-files item actions", () => {
     await main.selectList.showItemActions();
 
     expect(main.selectList.itemActionsList.isVisible()).toBeTruthy();
-    expect(atom.workspace.getModalTrail()).toEqual(["Files", "Actions"]);
+    expect(lumine.workspace.getModalTrail()).toEqual(["Files", "Actions"]);
     // The actions list wears the package class, so the package keymap
     // resolves action keystrokes inside it too.
     expect(main.selectList.itemActionsList.element.classList.contains("fuzzy-files")).toBe(true);
@@ -69,12 +69,12 @@ describe("fuzzy-files item actions", () => {
 
   it("trashes the selected item through the shell service", async () => {
     spyOn(main.selectList, "getSelectedItem").and.returnValue({ aPath: __filename });
-    spyOn(atom.shell, "trashItem").and.returnValue(Promise.resolve());
-    spyOn(atom.notifications, "addSuccess");
+    spyOn(lumine.shell, "trashItem").and.returnValue(Promise.resolve());
+    spyOn(lumine.notifications, "addSuccess");
 
     await main.performAction("trash");
 
-    expect(atom.shell.trashItem).toHaveBeenCalledWith(__filename);
-    expect(atom.notifications.addSuccess).toHaveBeenCalled();
+    expect(lumine.shell.trashItem).toHaveBeenCalledWith(__filename);
+    expect(lumine.notifications.addSuccess).toHaveBeenCalled();
   });
 });

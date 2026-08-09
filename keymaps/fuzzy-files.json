@@ -1,10 +1,10 @@
 {
-  "atom-workspace": {
+  "lumine-workspace": {
     // A cross-editor convention, so it keeps ctrl- rather than moving
     // into the alt- tier. cmdorctrl- because a raw ctrl- has no macOS story.
     "cmdorctrl-p": "fuzzy-files:toggle"
   },
-  ".fuzzy-files atom-text-editor[mini]": {
+  ".fuzzy-files lumine-text-editor[mini]": {
     "alt-enter": "fuzzy-files:open-external",
     "ctrl-enter": "fuzzy-files:show-in-folder",
     "alt-delete": "fuzzy-files:trash",
