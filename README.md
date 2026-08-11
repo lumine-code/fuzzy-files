@@ -47,15 +47,13 @@ Commands available in `.fuzzy-files`, all listed with their keybindings in the i
 - `fuzzy-files:query-selection`: use the editor selection as the query,
 - `fuzzy-files:reveal-in-tree-view`: reveal the file in the tree view,
 - `fuzzy-files:cut-file`: cut the file to the system clipboard,
-- `fuzzy-files:copy-file`: copy the file to the system clipboard,
-- `fuzzy-files:claude-chat`: attach the file to the Claude chat.
+- `fuzzy-files:copy-file`: copy the file to the system clipboard.
 
 ## Services
 
 - **[fuzzy-files.score-modifier](docs/fuzzy-files.score-modifier.md)** (`1.0.0`): provided to let other packages register functions that boost or penalize the score of search results.
 - **open-external** (`^1.0.0`): consumed to open files with the configured external application.
 - **windows-clip** (`^1.0.0`): consumed to copy and cuts files to the Windows clipboard.
-- **claude-chat** (`^1.0.0`): consumed to attach the selected file to a claude-chat session.
 - **tree-view.selection** (`^1.0.0`): consumed to reveal the selected file in the tree view.
 
 ## Customization

@@ -29,7 +29,6 @@
     "alt-q": "fuzzy-files:query-selected-path",
     "alt-s": "fuzzy-files:query-selection",
     "alt-t": "fuzzy-files:reveal-in-tree-view",
-    "alt-f": "fuzzy-files:claude-chat",
     "f5": "fuzzy-files:refresh-index",
     "alt-w alt-x": "fuzzy-files:cut-file",
     "alt-w alt-c": "fuzzy-files:copy-file"

@@ -99,11 +99,6 @@
         "^1.0.0": "consumeWindowsClip"
       }
     },
-    "claude-chat": {
-      "versions": {
-        "^1.0.0": "consumeClaudeChat"
-      }
-    },
     "tree-view.selection": {
       "versions": {
         "^1.0.0": "consumeTreeViewSelection"
