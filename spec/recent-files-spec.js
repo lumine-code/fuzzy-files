@@ -18,9 +18,8 @@ describe("fuzzy-files recent files", () => {
     const activation = lumine.packages.activatePackage("fuzzy-files");
     lumine.commands.dispatch(workspaceElement, "fuzzy-files:toggle");
     main = (await activation).mainModule;
-    await new Promise((resolve, reject) => {
-      main.cache((error) => (error ? reject(error) : resolve()));
-    });
+    await main.whenIndexed();
+    main.materialize();
     main.selectList.hide();
     main.clearRecent();
   });

@@ -53,7 +53,7 @@
     },
     "ignoredNames": {
       "title": "List of ignore glob patterns",
-      "description": "Files and directories matching these patterns are ignored. This list is merged with the list defined by the core `Ignored Names' configuration setting.",
+      "description": "Files and directories matching these patterns are hidden from the file finder. The editor's Ignored Names setting already applies and narrows the shared project index; patterns added here reduce only what this list shows.",
       "type": "array",
       "items": {
         "type": "string"

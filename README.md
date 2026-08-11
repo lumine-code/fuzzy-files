@@ -8,7 +8,7 @@ Quickly find and take an action over project files.
 - **Line navigation**: jumps to a specific line using `:` syntax such as `file.js:42`.
 - **Recent files**: recently opened files stay on top while the query is empty.
 - **Multiple projects**: searches across every open project path.
-- **Real-time updates**: auto-refreshes on file create, delete, and rename.
+- **Real-time updates**: reads the editor's shared project file index, so the list follows the filesystem as files come and go.
 - **Path actions**: copies, inserts, or reveals file paths in several formats.
 - **Service integration**: opens files externally, reveals them in the tree view, and copies them to the clipboard through optional services.
 
