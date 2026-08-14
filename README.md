@@ -14,7 +14,7 @@ Quickly find and take an action over project files.
 
 ## Installation
 
-To install `fuzzy-files` search for _fuzzy-files_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/fuzzy-files`.
+To install `fuzzy-files` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/fuzzy-files`.
 
 ## Commands
 
@@ -51,10 +51,10 @@ Commands available in `.fuzzy-files`, all listed with their keybindings in the i
 
 ## Services
 
-- **[fuzzy-files.score-modifier](docs/fuzzy-files.score-modifier.md)** (`1.0.0`): provided to let other packages register functions that boost or penalize the score of search results.
-- **open-external** (`^1.0.0`): consumed to open files with the configured external application.
-- **windows-clip** (`^1.0.0`): consumed to copy and cuts files to the Windows clipboard.
-- **tree-view.selection** (`^1.0.0`): consumed to reveal the selected file in the tree view.
+- [`fuzzy-files.score-modifier`](docs/fuzzy-files.score-modifier.md): provided to let other packages register functions that boost or penalize the score of search results.
+- `open-external`: consumed to open files with the configured external application.
+- `windows-clip`: consumed to copy and cuts files to the Windows clipboard.
+- `tree-view.selection`: consumed to reveal the selected file in the tree view.
 
 ## Customization
 
