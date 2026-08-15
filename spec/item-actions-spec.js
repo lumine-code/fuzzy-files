@@ -44,6 +44,25 @@ describe("fuzzy-files item actions", () => {
     expect(byCommand.has("fuzzy-files:toggle")).toBe(false);
   });
 
+  it("separates the actions about the list from the actions about the file", async () => {
+    main.selectList.show();
+    await main.selectList.showItemActions();
+
+    const rows = main.selectList.itemActionsList.props.items;
+    const scopeOf = (command) => rows.find((row) => row.command === command)?.scope;
+
+    expect(scopeOf("fuzzy-files:open-external")).toBe("item");
+    expect(scopeOf("fuzzy-files:refresh-index")).toBe("list");
+    expect(scopeOf("fuzzy-files:use-forward-slashes")).toBe("list");
+
+    // Every file action comes before every list action, and the rule sits on
+    // the first of the latter.
+    const firstList = rows.findIndex((row) => row.scope === "list");
+    expect(firstList).toBeGreaterThan(0);
+    expect(rows.slice(firstList).every((row) => row.scope === "list")).toBe(true);
+    expect(main.selectList.itemActionsList.props.separatorIds).toEqual([rows[firstList].command]);
+  });
+
   it("shows the actions as a flow step and runs one against the master list", async () => {
     main.selectList.show();
 
