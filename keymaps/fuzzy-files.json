@@ -5,8 +5,12 @@
     "cmdorctrl-p": "fuzzy-files:toggle"
   },
   ".fuzzy-files lumine-text-editor[mini]": {
-    "alt-enter": "fuzzy-files:open-external",
-    "ctrl-enter": "fuzzy-files:show-in-folder",
+    // The ecosystem's pair for handing a path to the system: alt-f12 opens it,
+    // ctrl-f12 shows it in the file manager. open-external binds the same two
+    // in the tree view, the image editor and the PDF view, so the keys mean
+    // one thing everywhere rather than one thing per surface.
+    "alt-f12": "fuzzy-files:open-external",
+    "ctrl-f12": "fuzzy-files:show-in-folder",
     "alt-delete": "fuzzy-files:trash",
     "alt-left": "fuzzy-files:split-left",
     "alt-right": "fuzzy-files:split-right",
