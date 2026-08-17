@@ -21,7 +21,7 @@ describe("fuzzy-files item actions", () => {
 
     const openExternal = byCommand.get("fuzzy-files:open-external");
     expect(openExternal.name).toBe("Open External");
-    expect(openExternal.description).toBe("Open the file in the default external program");
+    expect(openExternal.description).toBe("Open the file in the default external program.");
     expect(openExternal.keystrokes).toEqual(["alt-f12"]);
 
     const insertRelative = byCommand.get("fuzzy-files:insert-relative-path");
@@ -35,7 +35,7 @@ describe("fuzzy-files item actions", () => {
       expect(action.description).toBeTruthy();
     }
     expect(byCommand.get("fuzzy-files:copy-absolute-path").description).toBe(
-      "Copy the full path from the filesystem root to the clipboard",
+      "Copy the full path from the filesystem root to the clipboard.",
     );
 
     // Chrome and global commands stay out.
