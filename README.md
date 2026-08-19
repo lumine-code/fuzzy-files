@@ -53,7 +53,7 @@ Commands available in `.fuzzy-files`, all listed with their keybindings in the i
 
 - [`fuzzy-files.score-modifier`](docs/fuzzy-files.score-modifier.md): provided to let other packages register functions that boost or penalize the score of search results.
 - `open-external`: consumed to open files with the configured external application.
-- `windows-clip`: consumed to copy and cuts files to the Windows clipboard.
+- `native-clip`: consumed to cut and copy files to the system clipboard.
 - `tree-view.selection`: consumed to reveal the selected file in the tree view.
 
 ## Customization

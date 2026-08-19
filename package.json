@@ -94,9 +94,9 @@
         "^1.0.0": "consumeOpenExternal"
       }
     },
-    "windows-clip": {
+    "native-clip": {
       "versions": {
-        "^1.0.0": "consumeWindowsClip"
+        "^1.0.0": "consumeNativeClip"
       }
     },
     "tree-view.selection": {
