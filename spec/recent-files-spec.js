@@ -25,6 +25,9 @@ describe("fuzzy-files recent files", () => {
   });
 
   afterEach(async () => {
+    // The main module is a singleton across the suite, so a service stubbed
+    // into it has to be taken back out.
+    main.openExternalService = null;
     await lumine.packages.deactivatePackage("fuzzy-files");
   });
 
@@ -71,6 +74,33 @@ describe("fuzzy-files recent files", () => {
     await lumine.views.getNextUpdatePromise();
     expect(main.recentlyUsed).toEqual([]);
     expect(selectList.element.querySelector(".select-list-separator")).toBeNull();
+  });
+
+  it("records the file for every action over it, not only an open", async () => {
+    const gamma = itemNamed("gamma.txt");
+    main.openExternalService = {
+      openExternal: jasmine.createSpy("openExternal"),
+      showInFolder: jasmine.createSpy("showInFolder"),
+    };
+    const selectList = await showList();
+    await selectList.selectItem(gamma);
+
+    main.performAction("open-external");
+
+    expect(main.openExternalService.openExternal).toHaveBeenCalledWith(gamma.aPath);
+    expect(main.recentlyUsed).toEqual([gamma.aPath]);
+  });
+
+  it("records a file it trashed, since the trash is where it is put back from", async () => {
+    const gamma = itemNamed("gamma.txt");
+    spyOn(lumine.shell, "trashItem").and.returnValue(Promise.resolve());
+    const selectList = await showList();
+    await selectList.selectItem(gamma);
+
+    await main.performAction("trash");
+
+    expect(lumine.shell.trashItem).toHaveBeenCalledWith(gamma.aPath);
+    expect(main.recentlyUsed).toEqual([gamma.aPath]);
   });
 
   it("caps recent files at the configured count", () => {
