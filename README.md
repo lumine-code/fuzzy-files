@@ -47,7 +47,8 @@ Commands available in `.fuzzy-files`, all listed with their keybindings in the i
 - `fuzzy-files:query-selection`: use the editor selection as the query,
 - `fuzzy-files:reveal-in-tree-view`: reveal the file in the tree view,
 - `fuzzy-files:cut-file`: cut the file to the system clipboard,
-- `fuzzy-files:copy-file`: copy the file to the system clipboard.
+- `fuzzy-files:copy-file`: copy the file to the system clipboard,
+- `fuzzy-files:remove-from-recent`: drop the selected file from the recent section, offered only while a recent one is selected.
 
 ## Services
 

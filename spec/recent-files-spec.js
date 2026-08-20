@@ -103,6 +103,36 @@ describe("fuzzy-files recent files", () => {
     expect(main.recentlyUsed).toEqual([gamma.aPath]);
   });
 
+  it("drops one file from the section without closing the list", async () => {
+    const beta = itemNamed("beta.txt");
+    main.recordRecent(itemNamed("gamma.txt"));
+    main.recordRecent(beta);
+    const selectList = await showList();
+    await selectList.selectItem(beta);
+
+    lumine.commands.dispatch(selectList.element, "fuzzy-files:remove-from-recent");
+    await lumine.views.getNextUpdatePromise();
+
+    expect(main.recentlyUsed).toEqual([itemNamed("gamma.txt").aPath]);
+    expect(selectList.isVisible()).toBe(true);
+    expect(selectList.getSelectedItem().aPath).toBe(beta.aPath);
+  });
+
+  it("offers the action only while a recent file is selected", async () => {
+    const beta = itemNamed("beta.txt");
+    main.recordRecent(beta);
+    const selectList = await showList();
+
+    await selectList.selectItem(beta);
+    let actions = selectList.itemActions().map((action) => action.command);
+    expect(actions).toContain("fuzzy-files:remove-from-recent");
+
+    await selectList.selectItem(itemNamed("alpha.txt"));
+    actions = selectList.itemActions().map((action) => action.command);
+    expect(actions).not.toContain("fuzzy-files:remove-from-recent");
+    expect(actions).toContain("fuzzy-files:open-external");
+  });
+
   it("caps recent files at the configured count", () => {
     lumine.config.set("fuzzy-files.recentCount", 2);
     main.recordRecent(itemNamed("alpha.txt"));
