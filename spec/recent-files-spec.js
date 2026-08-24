@@ -91,6 +91,38 @@ describe("fuzzy-files recent files", () => {
     expect(main.recentlyUsed).toEqual([gamma.aPath]);
   });
 
+  it("opens an alt-clicked file through open-external when the service is available", async () => {
+    const alpha = itemNamed("alpha.txt");
+    const gamma = itemNamed("gamma.txt");
+    const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
+    main.openExternalService = { openExternal: jasmine.createSpy("openExternal") };
+    const selectList = await showList();
+    await selectList.selectItem(alpha);
+    const row = selectList.listItems[selectList.items.indexOf(gamma)].component.element;
+
+    row.dispatchEvent(
+      new MouseEvent("click", { altKey: true, button: 0, bubbles: true, cancelable: true }),
+    );
+
+    expect(main.openExternalService.openExternal).toHaveBeenCalledWith(gamma.aPath);
+    expect(open).not.toHaveBeenCalled();
+    expect(main.recentlyUsed).toEqual([gamma.aPath]);
+  });
+
+  it("keeps the ordinary click action for alt-click when open-external is unavailable", async () => {
+    const gamma = itemNamed("gamma.txt");
+    const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
+    const selectList = await showList();
+    const row = selectList.listItems[selectList.items.indexOf(gamma)].component.element;
+
+    row.dispatchEvent(
+      new MouseEvent("click", { altKey: true, button: 0, bubbles: true, cancelable: true }),
+    );
+
+    expect(open).toHaveBeenCalled();
+    expect(open.calls.mostRecent().args[0]).toBe(gamma.aPath);
+  });
+
   it("records a file it trashed, since the trash is where it is put back from", async () => {
     const gamma = itemNamed("gamma.txt");
     spyOn(lumine.shell, "trashItem").and.returnValue(Promise.resolve());

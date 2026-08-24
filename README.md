@@ -10,7 +10,7 @@ Quickly find and take an action over project files.
 - **Multiple projects**: searches across every open project path.
 - **Real-time updates**: reads the editor's shared project file index, so the list follows the filesystem as files come and go.
 - **Path actions**: copies, inserts, or reveals file paths in several formats.
-- **Service integration**: opens files externally, reveals them in the tree view, and copies them to the clipboard through optional services.
+- **Service integration**: alt-click opens a file externally when `open-external` is available; other optional services reveal it in the tree view and copy it to the clipboard.
 
 ## Installation
 
