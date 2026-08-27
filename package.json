@@ -52,7 +52,7 @@
       "default": 10
     },
     "ignoredNames": {
-      "title": "List of ignore glob patterns",
+      "title": "Additional Ignored Names",
       "description": "Files and directories matching these patterns are hidden from the file finder. The editor's Ignored Names setting already applies and narrows the shared project index; patterns added here reduce only what this list shows.",
       "type": "array",
       "items": {
@@ -104,9 +104,6 @@
         "^1.0.0": "consumeTreeViewSelection"
       }
     }
-  },
-  "dependencies": {
-    "picomatch": "^4.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

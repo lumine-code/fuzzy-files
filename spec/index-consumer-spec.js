@@ -71,6 +71,13 @@ describe("fuzzy-files as a file-index consumer", () => {
     expect(lumine.project.observeFilePaths).toHaveBeenCalled();
   });
 
+  it("does not touch the index when its ignored names change before first open", async () => {
+    await activate("fuzzy-files:clear-recent");
+    lumine.config.set("fuzzy-files.ignoredNames", ["*.log"]);
+    expect(lumine.project.observeFilePaths).not.toHaveBeenCalled();
+    expect(lumine.project.getFilePaths).not.toHaveBeenCalled();
+  });
+
   it("derives an item for every indexed path", async () => {
     await activate();
     const item = main.itemsByPath.get(path.join(dir, "sub", "gamma.js"));
@@ -93,7 +100,7 @@ describe("fuzzy-files as a file-index consumer", () => {
     ]);
   });
 
-  it("applies its own ignore patterns and not core's", async () => {
+  it("applies its own ignored names and not core's", async () => {
     await activate();
     lumine.config.set("fuzzy-files.ignoredNames", ["*.js"]);
     expect(main.itemsByPath.size).toBe(0);
@@ -106,6 +113,13 @@ describe("fuzzy-files as a file-index consumer", () => {
     // hide a path the setting does not name.
     lumine.config.set("core.ignoredNames", ["*.js"]);
     expect(main.itemsByPath.size).toBe(3);
+  });
+
+  it("uses ignored-name directory semantics for descendants", async () => {
+    await activate();
+    lumine.config.set("fuzzy-files.ignoredNames", ["sub"]);
+    expect(main.itemsByPath.has(path.join(dir, "sub", "gamma.js"))).toBe(false);
+    expect(main.itemsByPath.size).toBe(2);
   });
 
   it("adds and drops items as the index reports them", async () => {
