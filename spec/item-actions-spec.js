@@ -15,7 +15,9 @@ describe("fuzzy-files item actions", () => {
     await lumine.packages.deactivatePackage("fuzzy-files");
   });
 
-  it("derives its actions from the command registrations and the keymap", () => {
+  it("derives its actions from the command registrations and the keymap", async () => {
+    await main.selectList.show();
+    spyOn(main.selectList, "getSelectedItem").and.returnValue({ aPath: __filename });
     const actions = main.selectList.itemActions();
     const byCommand = new Map(actions.map((action) => [action.command, action]));
 
@@ -37,6 +39,7 @@ describe("fuzzy-files item actions", () => {
     expect(byCommand.get("fuzzy-files:copy-absolute-path").description).toBe(
       "Copy the full path from the filesystem root to the clipboard.",
     );
+    expect(byCommand.get("fuzzy-files:open").keystrokes).toEqual(["enter"]);
 
     // Chrome and global commands stay out.
     expect(byCommand.has("core:confirm")).toBe(false);
@@ -44,8 +47,24 @@ describe("fuzzy-files item actions", () => {
     expect(byCommand.has("fuzzy-files:toggle")).toBe(false);
   });
 
+  it("offers clear recent without a match only while recent files exist", async () => {
+    await main.selectList.show();
+    spyOn(main.selectList, "getSelectedItem").and.returnValue(null);
+    const hasClear = () =>
+      main.selectList.itemActions().some(({ command }) => command === "fuzzy-files:clear-recent");
+
+    expect(hasClear()).toBe(false);
+    main.recentlyUsed = [__filename];
+    expect(hasClear()).toBe(true);
+    expect(
+      main.selectList.itemActions().find(({ command }) => command === "fuzzy-files:clear-recent")
+        .scope,
+    ).toBe("list");
+  });
+
   it("separates the actions about the list from the actions about the file", async () => {
-    main.selectList.show();
+    spyOn(main.selectList, "getSelectedItem").and.returnValue({ aPath: __filename });
+    await main.selectList.show();
     await main.selectList.showItemActions();
 
     const rows = main.selectList.itemActionsList.props.items;
@@ -64,7 +83,7 @@ describe("fuzzy-files item actions", () => {
   });
 
   it("shows the actions as a flow step and runs one against the master list", async () => {
-    main.selectList.show();
+    await main.selectList.show();
 
     await main.selectList.showItemActions();
 
