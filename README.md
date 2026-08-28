@@ -24,7 +24,7 @@ Commands available in `lumine-workspace`:
 - `fuzzy-files:refresh`: refresh the file cache,
 - `fuzzy-files:clear-recent`: forget the recently used files.
 
-Commands available in `.fuzzy-files`, all listed with their keybindings in the item-actions list (F12):
+Commands available in `.fuzzy-files`:
 
 - `fuzzy-files:open`: open the selected file,
 - `fuzzy-files:open-external`: open the file in the default external program,
