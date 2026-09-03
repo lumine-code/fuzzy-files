@@ -15,10 +15,18 @@ describe("fuzzy-files item actions", () => {
     await lumine.packages.deactivatePackage("fuzzy-files");
   });
 
-  it("derives its actions from the command registrations and the keymap", async () => {
-    await main.selectList.show();
-    spyOn(main.selectList, "getSelectedItem").and.returnValue({ aPath: __filename });
-    const actions = main.selectList.itemActions();
+  it("describes its explicit actions with command metadata and keybindings", async () => {
+    await main.selectList.update({
+      items: [
+        {
+          aPath: __filename,
+          pPath: __dirname,
+          fPath: "item-actions-spec.js",
+          distance: 1,
+        },
+      ],
+    });
+    const actions = main.selectList.getAvailableActions();
     const byCommand = new Map(actions.map((action) => [action.command, action]));
 
     const openExternal = byCommand.get("fuzzy-files:open-external");
@@ -40,6 +48,7 @@ describe("fuzzy-files item actions", () => {
       "Copy the full path from the filesystem root to the clipboard.",
     );
     expect(byCommand.get("fuzzy-files:open").keystrokes).toEqual(["enter"]);
+    expect(byCommand.get("fuzzy-files:trash").tone).toBe("danger");
 
     // Chrome and global commands stay out.
     expect(byCommand.has("core:confirm")).toBe(false);
@@ -47,72 +56,93 @@ describe("fuzzy-files item actions", () => {
     expect(byCommand.has("fuzzy-files:toggle")).toBe(false);
   });
 
-  it("offers clear recent without a match only while recent files exist", async () => {
-    await main.selectList.show();
-    spyOn(main.selectList, "getSelectedItem").and.returnValue(null);
+  it("offers the core recent actions only while recent files exist", async () => {
+    main.selectList.selectNone();
     const hasClear = () =>
-      main.selectList.itemActions().some(({ command }) => command === "fuzzy-files:clear-recent");
+      main.selectList
+        .getAvailableActions()
+        .some(({ command }) => command === "select-list:clear-recents");
 
     expect(hasClear()).toBe(false);
-    main.recentlyUsed = [__filename];
+    await main.selectList.setRecentItemIds([__filename]);
     expect(hasClear()).toBe(true);
     expect(
-      main.selectList.itemActions().find(({ command }) => command === "fuzzy-files:clear-recent")
-        .scope,
-    ).toBe("list");
+      main.selectList
+        .getAvailableActions()
+        .find(({ command }) => command === "select-list:clear-recents").context,
+    ).toBe("dialog");
   });
 
   it("separates the actions about the list from the actions about the file", async () => {
-    spyOn(main.selectList, "getSelectedItem").and.returnValue({ aPath: __filename });
-    await main.selectList.show();
-    await main.selectList.showItemActions();
+    await main.selectList.update({
+      items: [
+        {
+          aPath: __filename,
+          pPath: __dirname,
+          fPath: "item-actions-spec.js",
+          distance: 1,
+        },
+      ],
+    });
+    const rows = main.selectList.getAvailableActions();
+    const contextOf = (command) => rows.find((row) => row.command === command)?.context;
 
-    const rows = main.selectList.itemActionsList.props.items;
-    const scopeOf = (command) => rows.find((row) => row.command === command)?.scope;
-
-    expect(scopeOf("fuzzy-files:open-external")).toBe("item");
-    expect(scopeOf("fuzzy-files:refresh-index")).toBe("list");
-    expect(scopeOf("fuzzy-files:use-forward-slashes")).toBe("list");
-
-    // Every file action comes before every list action, and the rule sits on
-    // the first of the latter.
-    const firstList = rows.findIndex((row) => row.scope === "list");
-    expect(firstList).toBeGreaterThan(0);
-    expect(rows.slice(firstList).every((row) => row.scope === "list")).toBe(true);
-    expect(main.selectList.itemActionsList.props.separatorIds).toEqual([rows[firstList].command]);
+    expect(contextOf("fuzzy-files:open-external")).toBe("item");
+    expect(contextOf("fuzzy-files:refresh-index")).toBe("dialog");
+    expect(contextOf("fuzzy-files:use-forward-slashes")).toBe("dialog");
+    expect(rows.find((row) => row.command === "fuzzy-files:open-external").group).toBe("Open");
+    expect(rows.find((row) => row.command === "fuzzy-files:refresh-index").group).toBe("Finder");
   });
 
-  it("shows the actions as a flow step and runs one against the master list", async () => {
+  it("shows the shared action palette as a flow step and runs against the master list", async () => {
     await main.selectList.show();
 
-    await main.selectList.showItemActions();
+    expect(await main.selectList.showActions()).toBe(true);
 
-    expect(main.selectList.itemActionsList.isVisible()).toBeTruthy();
     expect(lumine.workspace.getModalTrail()).toEqual(["Files", "Actions"]);
-    // The actions list wears the package class, so the package keymap
-    // resolves action keystrokes inside it too.
-    expect(main.selectList.itemActionsList.element.classList.contains("fuzzy-files")).toBe(true);
+    lumine.workspace.popModal();
 
     const spy = spyOn(main, "refresh");
-    const index = main.selectList.itemActionsList.items.findIndex(
-      (item) => item.command === "fuzzy-files:refresh-index",
-    );
-    main.selectList.itemActionsList.selectIndex(index);
-    main.selectList.itemActionsList.confirmSelection();
+    await main.selectList.runAction("fuzzy-files:refresh-index");
 
     expect(spy).toHaveBeenCalled();
     expect(main.selectList.isVisible()).toBeTruthy();
-    expect(main.selectList.itemActionsList.isVisible()).toBeFalsy();
   });
 
   it("trashes the selected item through the shell service", async () => {
-    spyOn(main.selectList, "getSelectedItem").and.returnValue({ aPath: __filename });
+    await main.selectList.update({
+      items: [
+        {
+          aPath: __filename,
+          pPath: __dirname,
+          fPath: "item-actions-spec.js",
+          distance: 1,
+        },
+      ],
+    });
     spyOn(lumine.shell, "trashItem").and.returnValue(Promise.resolve());
     spyOn(lumine.notifications, "addSuccess");
 
-    await main.performAction("trash");
+    await main.selectList.runAction("fuzzy-files:trash");
 
     expect(lumine.shell.trashItem).toHaveBeenCalledWith(__filename);
     expect(lumine.notifications.addSuccess).toHaveBeenCalled();
+  });
+
+  it("opens with the parsed line captured when the action starts", async () => {
+    const item = {
+      aPath: __filename,
+      pPath: __dirname,
+      fPath: "item-actions-spec.js",
+      distance: 1,
+    };
+    await main.selectList.update({ items: [item], query: "item-actions:7" });
+    const open = spyOn(lumine.workspace, "open").and.resolveTo();
+
+    await main.selectList.runAction("fuzzy-files:open");
+
+    expect(open).toHaveBeenCalled();
+    expect(open.calls.mostRecent().args[0]).toBe(__filename);
+    expect(open.calls.mostRecent().args[1].initialLine).toBe(6);
   });
 });

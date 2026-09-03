@@ -16,12 +16,13 @@ describe("fuzzy-files recent files", () => {
     jasmine.attachToDOM(workspaceElement);
 
     const activation = lumine.packages.activatePackage("fuzzy-files");
-    lumine.commands.dispatch(workspaceElement, "fuzzy-files:toggle");
+    const opening = lumine.commands.dispatch(workspaceElement, "fuzzy-files:toggle");
     main = (await activation).mainModule;
+    await opening;
     await main.whenIndexed();
     main.materialize();
     main.selectList.hide();
-    main.clearRecent();
+    await main.selectList.clearRecentItems();
   });
 
   afterEach(async () => {
@@ -36,9 +37,17 @@ describe("fuzzy-files recent files", () => {
   }
 
   async function showList() {
-    main.selectList.show();
-    await lumine.views.getNextUpdatePromise();
+    await main.selectList.show();
     return main.selectList;
+  }
+
+  function nextAction() {
+    return new Promise((resolve) => {
+      const disposable = main.selectList.onDidFinishAction((event) => {
+        disposable.dispose();
+        resolve(event);
+      });
+    });
   }
 
   it("remembers opened files and separates them from the ordinary results", async () => {
@@ -47,7 +56,7 @@ describe("fuzzy-files recent files", () => {
     const selectList = await showList();
     await selectList.selectItem(beta);
 
-    main.performAction("open");
+    await selectList.runAction("fuzzy-files:open");
 
     expect(open).toHaveBeenCalled();
     expect(open.calls.mostRecent().args[0]).toBe(beta.aPath);
@@ -55,8 +64,8 @@ describe("fuzzy-files recent files", () => {
     expect(main.serialize()).toEqual({ recentlyUsed: [beta.aPath] });
 
     await showList();
-    expect(selectList.items[0].aPath).toBe(beta.aPath);
-    const separator = selectList.element.querySelector(".select-list-separator");
+    expect(selectList.getDisplayedItems()[0].aPath).toBe(beta.aPath);
+    const separator = selectList.getElement().querySelector(".select-list-separator");
     expect(separator.previousElementSibling.textContent).toContain("beta.txt");
     expect(separator.nextElementSibling.textContent).not.toContain("beta.txt");
 
@@ -65,15 +74,15 @@ describe("fuzzy-files recent files", () => {
     // when the section applies, not the identity of the items in it.
     selectList.getQueryEditor().setText("alpha");
     await lumine.views.getNextUpdatePromise();
-    expect(selectList.getIdForItem(beta)).toBe(beta.aPath);
-    expect(selectList.element.querySelector(".select-list-separator")).toBeNull();
+    expect(selectList.getItemId(beta)).toBe(beta.aPath);
+    expect(selectList.getElement().querySelector(".select-list-separator")).toBeNull();
 
     selectList.getQueryEditor().setText("");
     await lumine.views.getNextUpdatePromise();
-    lumine.commands.dispatch(workspaceElement, "fuzzy-files:clear-recent");
+    await lumine.commands.dispatch(workspaceElement, "fuzzy-files:clear-recent");
     await lumine.views.getNextUpdatePromise();
     expect(main.recentlyUsed).toEqual([]);
-    expect(selectList.element.querySelector(".select-list-separator")).toBeNull();
+    expect(selectList.getElement().querySelector(".select-list-separator")).toBeNull();
   });
 
   it("records the file for every action over it, not only an open", async () => {
@@ -85,7 +94,7 @@ describe("fuzzy-files recent files", () => {
     const selectList = await showList();
     await selectList.selectItem(gamma);
 
-    main.performAction("open-external");
+    await selectList.runAction("fuzzy-files:open-external");
 
     expect(main.openExternalService.openExternal).toHaveBeenCalledWith(gamma.aPath);
     expect(main.recentlyUsed).toEqual([gamma.aPath]);
@@ -98,11 +107,14 @@ describe("fuzzy-files recent files", () => {
     main.openExternalService = { openExternal: jasmine.createSpy("openExternal") };
     const selectList = await showList();
     await selectList.selectItem(alpha);
-    const row = selectList.listItems[selectList.items.indexOf(gamma)].component.element;
+    const index = selectList.getDisplayedItems().indexOf(gamma);
+    const row = selectList.getElement().querySelectorAll("li[role='option']")[index];
 
+    const action = nextAction();
     row.dispatchEvent(
       new MouseEvent("click", { altKey: true, button: 0, bubbles: true, cancelable: true }),
     );
+    await action;
 
     expect(main.openExternalService.openExternal).toHaveBeenCalledWith(gamma.aPath);
     expect(open).not.toHaveBeenCalled();
@@ -113,11 +125,14 @@ describe("fuzzy-files recent files", () => {
     const gamma = itemNamed("gamma.txt");
     const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
     const selectList = await showList();
-    const row = selectList.listItems[selectList.items.indexOf(gamma)].component.element;
+    const index = selectList.getDisplayedItems().indexOf(gamma);
+    const row = selectList.getElement().querySelectorAll("li[role='option']")[index];
 
+    const action = nextAction();
     row.dispatchEvent(
       new MouseEvent("click", { altKey: true, button: 0, bubbles: true, cancelable: true }),
     );
+    await action;
 
     expect(open).toHaveBeenCalled();
     expect(open.calls.mostRecent().args[0]).toBe(gamma.aPath);
@@ -129,7 +144,7 @@ describe("fuzzy-files recent files", () => {
     const selectList = await showList();
     await selectList.selectItem(gamma);
 
-    await main.performAction("trash");
+    await selectList.runAction("fuzzy-files:trash");
 
     expect(lumine.shell.trashItem).toHaveBeenCalledWith(gamma.aPath);
     expect(main.recentlyUsed).toEqual([gamma.aPath]);
@@ -137,13 +152,12 @@ describe("fuzzy-files recent files", () => {
 
   it("drops one file from the section without closing the list", async () => {
     const beta = itemNamed("beta.txt");
-    main.recordRecent(itemNamed("gamma.txt"));
-    main.recordRecent(beta);
+    await main.selectList.recordRecentItem(itemNamed("gamma.txt"));
+    await main.selectList.recordRecentItem(beta);
     const selectList = await showList();
     await selectList.selectItem(beta);
 
-    lumine.commands.dispatch(selectList.element, "fuzzy-files:remove-from-recent");
-    await lumine.views.getNextUpdatePromise();
+    await selectList.runAction("select-list:remove-recent");
 
     expect(main.recentlyUsed).toEqual([itemNamed("gamma.txt").aPath]);
     expect(selectList.isVisible()).toBe(true);
@@ -152,31 +166,31 @@ describe("fuzzy-files recent files", () => {
 
   it("offers the action only while a recent file is selected", async () => {
     const beta = itemNamed("beta.txt");
-    main.recordRecent(beta);
+    await main.selectList.recordRecentItem(beta);
     const selectList = await showList();
 
     await selectList.selectItem(beta);
-    let actions = selectList.itemActions().map((action) => action.command);
-    expect(actions).toContain("fuzzy-files:remove-from-recent");
+    let actions = selectList.getAvailableActions().map((action) => action.command);
+    expect(actions).toContain("select-list:remove-recent");
 
     await selectList.selectItem(itemNamed("alpha.txt"));
-    actions = selectList.itemActions().map((action) => action.command);
-    expect(actions).not.toContain("fuzzy-files:remove-from-recent");
+    actions = selectList.getAvailableActions().map((action) => action.command);
+    expect(actions).not.toContain("select-list:remove-recent");
     expect(actions).toContain("fuzzy-files:open-external");
   });
 
-  it("caps recent files at the configured count", () => {
+  it("caps recent files at the configured count", async () => {
     lumine.config.set("fuzzy-files.recentCount", 2);
-    main.recordRecent(itemNamed("alpha.txt"));
-    main.recordRecent(itemNamed("beta.txt"));
-    main.recordRecent(itemNamed("gamma.txt"));
+    await main.selectList.recordRecentItem(itemNamed("alpha.txt"));
+    await main.selectList.recordRecentItem(itemNamed("beta.txt"));
+    await main.selectList.recordRecentItem(itemNamed("gamma.txt"));
 
     expect(main.recentlyUsed).toEqual([itemNamed("gamma.txt").aPath, itemNamed("beta.txt").aPath]);
   });
 
-  it("restores recent files from serialized package state", () => {
+  it("restores recent files from serialized package state", async () => {
     const betaPath = itemNamed("beta.txt").aPath;
-    main.recordRecent(itemNamed("beta.txt"));
+    await main.selectList.recordRecentItem(itemNamed("beta.txt"));
     const state = main.serialize();
     main.deactivate();
 

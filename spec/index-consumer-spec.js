@@ -160,7 +160,7 @@ describe("fuzzy-files as a file-index consumer", () => {
 
   it("refreshes the shared index rather than a cache of its own", async () => {
     await activate();
-    lumine.commands.dispatch(main.selectList.element, "fuzzy-files:refresh-index");
+    await main.selectList.runAction("fuzzy-files:refresh-index");
     expect(lumine.project.refreshFilePaths).toHaveBeenCalled();
   });
 });
