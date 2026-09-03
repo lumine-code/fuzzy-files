@@ -21,7 +21,7 @@ describe("fuzzy-files recent files", () => {
     await opening;
     await main.whenIndexed();
     main.materialize();
-    main.selectList.hide();
+    main.selectListHost.hide();
     await main.selectList.clearRecentItems();
   });
 
@@ -37,7 +37,7 @@ describe("fuzzy-files recent files", () => {
   }
 
   async function showList() {
-    await main.selectList.show();
+    await main.selectListHost.show();
     return main.selectList;
   }
 
@@ -160,7 +160,7 @@ describe("fuzzy-files recent files", () => {
     await selectList.runAction("select-list:remove-recent");
 
     expect(main.recentlyUsed).toEqual([itemNamed("gamma.txt").aPath]);
-    expect(selectList.isVisible()).toBe(true);
+    expect(main.selectListHost.isVisible()).toBe(true);
     expect(selectList.getSelectedItem().aPath).toBe(beta.aPath);
   });
 

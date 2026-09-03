@@ -8,7 +8,7 @@ describe("fuzzy-files item actions", () => {
     const activation = lumine.packages.activatePackage("fuzzy-files");
     lumine.commands.dispatch(lumine.views.getView(lumine.workspace), "fuzzy-files:toggle");
     main = (await activation).mainModule;
-    main.selectList.hide();
+    main.selectListHost.hide();
   });
 
   afterEach(async () => {
@@ -95,9 +95,9 @@ describe("fuzzy-files item actions", () => {
   });
 
   it("shows the shared action palette as a flow step and runs against the master list", async () => {
-    await main.selectList.show();
+    await main.selectListHost.show();
 
-    expect(await main.selectList.showActions()).toBe(true);
+    expect(await main.selectListHost.showActions()).toBe(true);
 
     expect(lumine.workspace.getModalTrail()).toEqual(["Files", "Actions"]);
     lumine.workspace.popModal();
@@ -106,7 +106,7 @@ describe("fuzzy-files item actions", () => {
     await main.selectList.runAction("fuzzy-files:refresh-index");
 
     expect(spy).toHaveBeenCalled();
-    expect(main.selectList.isVisible()).toBeTruthy();
+    expect(main.selectListHost.isVisible()).toBeTruthy();
   });
 
   it("trashes the selected item through the shell service", async () => {
