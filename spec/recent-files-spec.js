@@ -15,10 +15,11 @@ describe("fuzzy-files recent files", () => {
     workspaceElement = lumine.views.getView(lumine.workspace);
     jasmine.attachToDOM(workspaceElement);
 
-    const activation = lumine.packages.activatePackage("fuzzy-files");
+    const activation = lumine.packages.startPackage("fuzzy-files");
     const opening = lumine.commands.dispatch(workspaceElement, "fuzzy-files:toggle");
-    main = (await activation).mainModule;
+    await activation;
     await opening;
+    main = lumine.packages.getLoadedPackage("fuzzy-files").mainModule;
     await main.whenIndexed();
     main.materialize();
     main.selectListHost.hide();

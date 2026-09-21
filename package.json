@@ -36,13 +36,6 @@
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
-  "activationCommands": {
-    "lumine-workspace": [
-      "fuzzy-files:toggle",
-      "fuzzy-files:refresh",
-      "fuzzy-files:clear-recent"
-    ]
-  },
   "configSchema": {
     "recentCount": {
       "title": "Number of Recent Files",

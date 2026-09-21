@@ -32,14 +32,14 @@ describe("fuzzy-files as a file-index consumer", () => {
     return (paths) => (indexed = paths);
   };
 
-  // The package is `activationCommands`-gated, so activation only completes once
-  // one of its commands is dispatched. Which command matters: `toggle` opens the
-  // finder, while `clear-recent` activates it without ever showing the list —
-  // which is how the laziness case gets an activated but unopened package.
+  // Package activation is eager; the finder itself is loaded only by an
+  // operation that needs it. Which command matters: `toggle` opens the finder,
+  // while `clear-recent` initializes the index without showing the list.
   const activate = async (command = "fuzzy-files:toggle") => {
-    const activation = lumine.packages.activatePackage("fuzzy-files");
-    lumine.commands.dispatch(workspaceElement, command);
-    main = (await activation).mainModule;
+    await lumine.packages.startPackage("fuzzy-files");
+    const dispatch = lumine.commands.dispatch(workspaceElement, command);
+    await dispatch;
+    main = lumine.packages.getLoadedPackage("fuzzy-files").mainModule;
     return main;
   };
 
@@ -67,7 +67,7 @@ describe("fuzzy-files as a file-index consumer", () => {
     // for a crawl whether or not anyone opens the finder.
     expect(lumine.project.observeFilePaths).not.toHaveBeenCalled();
 
-    lumine.commands.dispatch(workspaceElement, "fuzzy-files:toggle");
+    await lumine.commands.dispatch(workspaceElement, "fuzzy-files:toggle");
     expect(lumine.project.observeFilePaths).toHaveBeenCalled();
   });
 

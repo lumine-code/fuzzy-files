@@ -5,9 +5,9 @@ describe("fuzzy-files item actions", () => {
     jasmine.attachToDOM(lumine.views.getView(lumine.workspace));
     // The package activates on its commands, so dispatch one to trigger it;
     // activation also loads the package keymap the actions list reads.
-    const activation = lumine.packages.activatePackage("fuzzy-files");
-    lumine.commands.dispatch(lumine.views.getView(lumine.workspace), "fuzzy-files:toggle");
-    main = (await activation).mainModule;
+    await lumine.packages.startPackage("fuzzy-files");
+    await lumine.commands.dispatch(lumine.views.getView(lumine.workspace), "fuzzy-files:toggle");
+    main = lumine.packages.getLoadedPackage("fuzzy-files").mainModule;
     main.selectListHost.hide();
   });
 
@@ -127,6 +127,27 @@ describe("fuzzy-files item actions", () => {
 
     expect(lumine.shell.trashItem).toHaveBeenCalledWith(__filename);
     expect(lumine.notifications.addSuccess).toHaveBeenCalled();
+  });
+
+  it("requests native-clip before the first file clipboard action", async () => {
+    const item = {
+      aPath: __filename,
+      pPath: __dirname,
+      fPath: "item-actions-spec.js",
+      distance: 1,
+    };
+    const nativeClip = { cutPaths: jasmine.createSpy("cutPaths").and.resolveTo(true) };
+    let delivery;
+    const request = spyOn(lumine.packages, "requestService").and.callFake(async () => {
+      delivery = main.consumeNativeClip(nativeClip);
+      return true;
+    });
+
+    expect(await main.performAction("clip", { effect: "cut" }, { item })).toBe(true);
+
+    expect(request).toHaveBeenCalledWith("native-clip", "^1.0.0");
+    expect(nativeClip.cutPaths).toHaveBeenCalledWith([__filename]);
+    delivery.dispose();
   });
 
   it("opens with the parsed line captured when the action starts", async () => {
