@@ -26,10 +26,6 @@
   "engines": {
     "lumine": "^1.0.0"
   },
-  "backgroundTips": [
-    "You can open any file in the project by typing part of its name with {{ 'fuzzy-files:toggle' | keystroke }}",
-    "You can send the file you picked in the finder straight into a split pane with {{ 'fuzzy-files:split-right' | keystroke }}"
-  ],
   "scripts": {
     "test": "lumine --test spec",
     "lint": "eslint . --max-warnings 0",
@@ -78,6 +74,11 @@
     "fuzzy-files.score-modifier": {
       "versions": {
         "1.0.0": "provideFuzzyFilesScoreModifier"
+      }
+    },
+    "background-tips.provider": {
+      "versions": {
+        "1.0.0": "provideBackgroundTips"
       }
     }
   },
