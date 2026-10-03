@@ -8,7 +8,9 @@
     "quick-open",
     "search",
     "navigation",
-    "project"
+    "project",
+    "completion",
+    "imports"
   ],
   "repository": "https://github.com/lumine-code/fuzzy-files",
   "bugs": {
@@ -21,11 +23,15 @@
     "keymaps",
     "lib",
     "menus",
-    "spec"
+    "spec",
+    "styles"
   ],
   "engines": {
     "lumine": "^1.0.0"
   },
+  "specPackages": [
+    "autocomplete"
+  ],
   "scripts": {
     "test": "lumine --test spec",
     "lint": "eslint . --max-warnings 0",
@@ -42,7 +48,7 @@
     },
     "ignoredNames": {
       "title": "Additional Ignored Names",
-      "description": "Files and directories matching these patterns are hidden from the file finder. The editor's Ignored Names setting already applies and narrows the shared project index; patterns added here reduce only what this list shows.",
+      "description": "Files and directories matching these patterns are hidden from the finder and path suggestions. The editor's Ignored Names setting already narrows the shared project index; these patterns narrow this package's file list further.",
       "type": "array",
       "items": {
         "type": "string"
@@ -68,6 +74,67 @@
         }
       ],
       "default": 0
+    },
+    "pathCompletion": {
+      "title": "Path Completion",
+      "description": "Complete paths using the finder's project files and ignored names.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "title": "Enable Path Completion",
+          "description": "Offer project file paths in autocomplete suggestions.",
+          "type": "boolean",
+          "default": true
+        },
+        "normalizeSlashes": {
+          "title": "Normalize Slashes",
+          "description": "Use forward slashes in inserted paths on every platform.",
+          "type": "boolean",
+          "default": true
+        },
+        "suggestionPriority": {
+          "title": "Suggestion Priority",
+          "description": "Priority reported to the autocomplete service. Above the 2 a language server reports, so that an explicitly typed path outranks a general identifier list -- this provider only answers when a path prefix actually matched, so it never displaces anything otherwise.",
+          "type": "number",
+          "default": 3
+        },
+        "imagePreview": {
+          "title": "Image Previews",
+          "description": "Display image thumbnails in path suggestions.",
+          "type": "boolean",
+          "default": false
+        },
+        "ignoreBuiltinScopes": {
+          "title": "Ignore Built-in Scopes",
+          "description": "Use only custom scope definitions.",
+          "type": "boolean",
+          "default": false
+        },
+        "scopes": {
+          "title": "Custom Scopes",
+          "description": "Additional scope, prefix, and insertion replacement definitions over the same files the finder lists.",
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "default": []
+        },
+        "enableHtmlSupport": {
+          "title": "HTML Attribute Support",
+          "description": "Suggest paths inside common HTML path attributes.",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "default": {
+        "enabled": true,
+        "normalizeSlashes": true,
+        "suggestionPriority": 3,
+        "imagePreview": false,
+        "ignoreBuiltinScopes": false,
+        "scopes": [],
+        "enableHtmlSupport": false
+      }
     }
   },
   "providedServices": {
@@ -79,6 +146,11 @@
     "background-tips.provider": {
       "versions": {
         "1.0.0": "provideBackgroundTips"
+      }
+    },
+    "autocomplete.provider": {
+      "versions": {
+        "1.0.0": "provideAutocomplete"
       }
     }
   },
@@ -96,6 +168,11 @@
     "tree-view.selection": {
       "versions": {
         "^1.0.0": "consumeTreeViewSelection"
+      }
+    },
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
       }
     }
   },

@@ -48,9 +48,13 @@ jobs:
   integration:
     # Run the Jasmine spec suite inside a real Lumine build; the specs exercise
     # the editor runtime (text editors, config, and service wiring).
-    name: Lumine integration specs
-    runs-on: ubuntu-latest
+    name: Lumine integration specs (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
     env:
       LUMINE_JASMINE_REPORTER: list
     steps:
@@ -67,6 +71,7 @@ jobs:
           cache: npm
           cache-dependency-path: lumine/package-lock.json
       - name: Install Linux build and headless-display dependencies
+        if: runner.os == 'Linux'
         run: |
           # A third-party repository on the runner image answering 403 must not
           # fail the job: the lists this actually needs still fetched, and the
@@ -82,6 +87,7 @@ jobs:
         run: npm ci --ignore-scripts
       - name: Install editor dependencies
         working-directory: lumine
+        shell: bash
         run: |
           install() { npm ci --ignore-scripts; }
           install || install || install
@@ -91,7 +97,17 @@ jobs:
       - name: Rebuild native modules for Electron
         working-directory: lumine
         run: npm run build
-      - name: Run the Jasmine spec suite
+      - name: Install spec dependency packages
+        working-directory: lumine
+        shell: bash
+        run: node script/install-spec-packages.js --package ../fuzzy-files --home "$RUNNER_TEMP/lumine-home" --github-env "$GITHUB_ENV"
+      - name: Run the Jasmine spec suite with Xvfb
+        if: runner.os == 'Linux'
         working-directory: lumine
         timeout-minutes: 20
         run: xvfb-run --auto-servernum npm start -- --test ../fuzzy-files/spec
+      - name: Run the Jasmine spec suite
+        if: runner.os != 'Linux'
+        working-directory: lumine
+        timeout-minutes: 20
+        run: npm start -- --test ../fuzzy-files/spec

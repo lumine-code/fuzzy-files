@@ -1,0 +1,10 @@
+.fuzzy-files-path-image {
+  width: 1.75em;
+  height: 1.75em;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+.fuzzy-files-index-status {
+  color: var(--text-color-subtle);
+}
