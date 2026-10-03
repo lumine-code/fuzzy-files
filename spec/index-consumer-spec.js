@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const temp = require("@lumine-code/temp").track();
+const temp = require("@lumine-code/fs-temp").track();
 
 // What this package owns is the derivation on top of the project's file index:
 // which paths become items, what those items look like, and what the list shows.
