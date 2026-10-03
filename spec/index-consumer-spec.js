@@ -71,6 +71,17 @@ describe("fuzzy-files as a file-index consumer", () => {
     expect(lumine.project.observeFilePaths).toHaveBeenCalled();
   });
 
+  it("opens the finder when the core has no URI-change event", async () => {
+    const subscribe = lumine.workspace.onDidChangePaneItemURI;
+    lumine.workspace.onDidChangePaneItemURI = undefined;
+    try {
+      await activate();
+      expect(main.itemsByPath.size).toBe(3);
+    } finally {
+      lumine.workspace.onDidChangePaneItemURI = subscribe;
+    }
+  });
+
   it("does not touch the index when its ignored names change before first open", async () => {
     await activate("fuzzy-files:clear-recent");
     lumine.config.set("fuzzy-files.ignoredNames", ["*.log"]);
