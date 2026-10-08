@@ -2,6 +2,8 @@
 
 Quickly find and take an action over project files.
 
+Fork of [pulsar-edit/pulsar](https://github.com/pulsar-edit/pulsar) (`packages/fuzzy-finder`).
+
 ## Features
 
 - **Fast fuzzy search**: ranks results by match quality, adjusted by distance from the active file and directory depth.
