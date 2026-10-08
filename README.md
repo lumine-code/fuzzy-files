@@ -22,7 +22,6 @@ To install `fuzzy-files` search for it in the Install pane of the Lumine setting
 Commands available in `lumine-workspace`:
 
 - `fuzzy-files:toggle`: toggle the fuzzy files panel,
-- `fuzzy-files:refresh`: refresh the shared project file index for the finder and path suggestions,
 - `fuzzy-files:clear-recent`: forget the recently used files.
 
 Commands available in `.fuzzy-files`:

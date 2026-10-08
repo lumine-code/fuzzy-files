@@ -11,10 +11,6 @@
               "command": "fuzzy-files:toggle"
             },
             {
-              "label": "Refresh",
-              "command": "fuzzy-files:refresh"
-            },
-            {
               "label": "Clear Recent Files",
               "command": "fuzzy-files:clear-recent"
             }
