@@ -44,6 +44,8 @@ jobs:
         run: npm run lint
       - name: Check formatting
         run: npm run format:check
+      - name: Check package payload
+        run: npm pack --dry-run --json
 
   integration:
     # Run the Jasmine spec suite inside a real Lumine build; the specs exercise
@@ -55,6 +57,9 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+    defaults:
+      run:
+        shell: bash
     env:
       LUMINE_JASMINE_REPORTER: list
     steps:
@@ -100,14 +105,17 @@ jobs:
       - name: Install spec dependency packages
         working-directory: lumine
         shell: bash
-        run: node script/install-spec-packages.js --package ../fuzzy-files --home "$RUNNER_TEMP/lumine-home" --github-env "$GITHUB_ENV"
+        run: node script/install-spec-packages.js --package ../fuzzy-files --home "$RUNNER_TEMP/fuzzy-files-home" --github-env "$GITHUB_ENV"
       - name: Run the Jasmine spec suite with Xvfb
-        if: runner.os == 'Linux'
         working-directory: lumine
         timeout-minutes: 20
-        run: xvfb-run --auto-servernum npm start -- --test ../fuzzy-files/spec
-      - name: Run the Jasmine spec suite
-        if: runner.os != 'Linux'
-        working-directory: lumine
-        timeout-minutes: 20
-        run: npm start -- --test ../fuzzy-files/spec
+        run: |
+          export TEMP="$RUNNER_TEMP/fuzzy-files-temp"
+          export TMP="$TEMP"
+          export TMPDIR="$TEMP"
+          mkdir -p "$TEMP"
+          if [ "$RUNNER_OS" = Linux ]; then
+            xvfb-run --auto-servernum npm start -- --test ../fuzzy-files/spec
+          else
+            npm start -- --test ../fuzzy-files/spec
+          fi
