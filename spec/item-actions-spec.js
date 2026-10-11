@@ -185,4 +185,26 @@ describe("fuzzy-files item actions", () => {
     expect(open.calls.mostRecent().args[0]).toBe(__filename);
     expect(open.calls.mostRecent().args[1].initialLine).toBe(6);
   });
+
+  it("preserves the cursor when reopening a file without a line suffix", async () => {
+    const editor = await lumine.workspace.open(__filename);
+    editor.setCursorBufferPosition([6, 3]);
+    await main.selectList.update({
+      items: [
+        {
+          aPath: __filename,
+          pPath: __dirname,
+          fPath: "item-actions-spec.js",
+          distance: 1,
+        },
+      ],
+      query: "item-actions",
+    });
+    const open = spyOn(lumine.workspace, "open").and.callThrough();
+
+    await main.selectList.runAction("fuzzy-files:open");
+
+    expect(open.calls.mostRecent().args[1].initialLine).toBeUndefined();
+    expect(editor.getCursorBufferPosition().toArray()).toEqual([6, 3]);
+  });
 });
