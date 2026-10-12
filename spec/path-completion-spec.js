@@ -10,6 +10,7 @@ describe("fuzzy-files", () => {
     lumine.config.set("fuzzy-files.ignoredNames", ["tests"]);
     lumine.config.set("core.excludeVcsIgnoredPaths", false);
     jasmine.attachToDOM(lumine.workspace.getElement());
+    lumine.project.setPaths([path.join(__dirname, "fixtures")]);
 
     await lumine.packages.activatePackage("language-javascript");
     const pack = await lumine.packages.activatePackage("fuzzy-files");
