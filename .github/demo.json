@@ -1,0 +1,16 @@
+{
+  "title": "fuzzy-files",
+  "description": "Find a project file by name.",
+  "recordedOn": "2026-10-13",
+  "sourceRevision": "5985d7c834ca00c1b90bdeabb01e0e0392c3c7eb",
+  "mode": "normal",
+  "fontSettings": "default",
+  "images": [
+    {
+      "file": "demo.png",
+      "label": "Find a project file by name.",
+      "width": 1100,
+      "height": 720
+    }
+  ]
+}

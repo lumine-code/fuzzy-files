@@ -15,6 +15,8 @@ Fork of [pulsar-edit/pulsar](https://github.com/pulsar-edit/pulsar) (`packages/f
 - **Path completion**: suggests paths from the same filtered project files while typing imports or explicit relative paths.
 - **Service integration**: alt-click opens a file externally when `open-external` is available; other optional services reveal it in the tree view and copy it to the clipboard.
 
+![Find a project file by name.](.github/demo.png)
+
 ## Installation
 
 To install `fuzzy-files` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/fuzzy-files`.
