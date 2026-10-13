@@ -108,7 +108,7 @@ describe("fuzzy-files recent files", () => {
     main.openExternalService = { openExternal: jasmine.createSpy("openExternal") };
     const selectList = await showList();
     await selectList.selectItem(alpha);
-    const index = selectList.getDisplayedItems().indexOf(gamma);
+    const index = selectList.getDisplayedItems().findIndex((item) => item.aPath === gamma.aPath);
     const row = selectList.getElement().querySelectorAll("li[role='option']")[index];
 
     const action = nextAction();
@@ -126,7 +126,7 @@ describe("fuzzy-files recent files", () => {
     const gamma = itemNamed("gamma.txt");
     const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
     const selectList = await showList();
-    const index = selectList.getDisplayedItems().indexOf(gamma);
+    const index = selectList.getDisplayedItems().findIndex((item) => item.aPath === gamma.aPath);
     const row = selectList.getElement().querySelectorAll("li[role='option']")[index];
 
     const action = nextAction();
