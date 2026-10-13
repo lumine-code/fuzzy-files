@@ -23,7 +23,9 @@
       "submenu": [
         {
           "label": "Find Project File…",
-          "command": "fuzzy-files:toggle"
+          "command": "fuzzy-files:toggle",
+          "group": "files",
+          "order": 30
         }
       ]
     }
