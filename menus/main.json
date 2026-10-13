@@ -17,6 +17,15 @@
           ]
         }
       ]
+    },
+    {
+      "label": "File",
+      "submenu": [
+        {
+          "label": "Find Project File…",
+          "command": "fuzzy-files:toggle"
+        }
+      ]
     }
   ]
 }
