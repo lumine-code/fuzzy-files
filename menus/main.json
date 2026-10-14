@@ -19,13 +19,13 @@
       ]
     },
     {
-      "label": "File",
+      "label": "Go",
       "submenu": [
         {
           "label": "Find Project File…",
           "command": "fuzzy-files:toggle",
           "group": "files",
-          "order": 30
+          "order": 10
         }
       ]
     }
