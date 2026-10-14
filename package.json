@@ -30,7 +30,8 @@
     "lumine": "^1.0.0"
   },
   "specPackages": [
-    "autocomplete"
+    "autocomplete",
+    "open-with"
   ],
   "scripts": {
     "test": "lumine --test spec",

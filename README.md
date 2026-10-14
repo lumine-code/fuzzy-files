@@ -13,7 +13,7 @@ Fork of [pulsar-edit/pulsar](https://github.com/pulsar-edit/pulsar) (`packages/f
 - **Real-time updates**: reads the editor's shared project file index, so the list follows the filesystem as files come and go.
 - **Path actions**: copies, inserts, or reveals file paths in several formats.
 - **Path completion**: suggests paths from the same filtered project files while typing imports or explicit relative paths.
-- **Service integration**: alt-click opens a file externally when `open-external` is available; other optional services reveal it in the tree view and copy it to the clipboard.
+- **Opening choices**: choose an opener and destination through Open With, or open a file externally through the configured system application.
 
 ![Find a project file by name.](.github/demo.png)
 
@@ -32,6 +32,8 @@ Commands available in `.fuzzy-files`:
 
 - `fuzzy-files:open`: open the selected file,
 - `fuzzy-files:open-external`: open the file in the default external program,
+- `fuzzy-files:open-with`: choose how and where to open the selected file,
+- `fuzzy-files:open-pending`: open the file as a temporary text editor tab,
 - `fuzzy-files:show-in-folder`: show the file in the system file manager,
 - `fuzzy-files:trash`: move the file to the trash,
 - `fuzzy-files:split-left/right/up/down`: open the file in a split pane,

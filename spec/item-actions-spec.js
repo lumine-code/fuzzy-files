@@ -47,11 +47,15 @@ describe("fuzzy-files item actions", () => {
     });
     const actions = main.selectList.getAvailableActions();
     const byCommand = new Map(actions.map((action) => [action.command, action]));
+    const openWith = byCommand.get("fuzzy-files:open-with");
+    expect(openWith.description).toBe("Choose how and where to open the selected file.");
+    expect(openWith.keystrokes).toEqual(["alt-enter"]);
+    expect(openWith.disposition).toBe("push");
 
     const openExternal = byCommand.get("fuzzy-files:open-external");
     expect(openExternal.name).toBe("Open External");
     expect(openExternal.description).toBe("Open the file in the default external program.");
-    expect(openExternal.keystrokes).toEqual(["alt-f12"]);
+    expect(openExternal.keystrokes).toEqual(["ctrl-alt-enter"]);
 
     const insertRelative = byCommand.get("fuzzy-files:insert-relative-path");
     // `alt-v` is a chord prefix and nothing else. Binding it as a complete

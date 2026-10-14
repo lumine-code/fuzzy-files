@@ -101,7 +101,7 @@ describe("fuzzy-files recent files", () => {
     expect(main.recentlyUsed).toEqual([gamma.aPath]);
   });
 
-  it("opens an alt-clicked file through open-external when the service is available", async () => {
+  it("opens a Ctrl-Alt-clicked file externally without also opening it in the editor", async () => {
     const alpha = itemNamed("alpha.txt");
     const gamma = itemNamed("gamma.txt");
     const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
@@ -113,7 +113,13 @@ describe("fuzzy-files recent files", () => {
 
     const action = nextAction();
     row.dispatchEvent(
-      new MouseEvent("click", { altKey: true, button: 0, bubbles: true, cancelable: true }),
+      new MouseEvent("click", {
+        altKey: true,
+        ctrlKey: true,
+        button: 0,
+        bubbles: true,
+        cancelable: true,
+      }),
     );
     await action;
 
@@ -122,9 +128,11 @@ describe("fuzzy-files recent files", () => {
     expect(main.recentlyUsed).toEqual([gamma.aPath]);
   });
 
-  it("keeps the ordinary click action for alt-click when open-external is unavailable", async () => {
+  it("opens the chooser for the Alt-clicked file even without an external service", async () => {
     const gamma = itemNamed("gamma.txt");
     const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
+    const choose = jasmine.createSpy("choose opener");
+    const command = lumine.commands.add("lumine-workspace", "open-with:toggle", choose);
     const selectList = await showList();
     const index = selectList.getDisplayedItems().findIndex((item) => item.aPath === gamma.aPath);
     const row = selectList.getElement().querySelectorAll("li[role='option']")[index];
@@ -133,10 +141,14 @@ describe("fuzzy-files recent files", () => {
     row.dispatchEvent(
       new MouseEvent("click", { altKey: true, button: 0, bubbles: true, cancelable: true }),
     );
-    await action;
+    const result = await action;
+    command.dispose();
 
-    expect(open).toHaveBeenCalled();
-    expect(open.calls.mostRecent().args[0]).toBe(gamma.aPath);
+    expect(result.command).toBe("fuzzy-files:open-with");
+    expect(choose).toHaveBeenCalledTimes(1);
+    expect(choose.calls.mostRecent().args[0].detail.path).toBe(gamma.aPath);
+    expect(open).not.toHaveBeenCalled();
+    expect(main.recentlyUsed).toEqual([]);
   });
 
   it("records a file it trashed, since the trash is where it is put back from", async () => {
