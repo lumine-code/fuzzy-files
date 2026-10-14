@@ -6,9 +6,8 @@
   },
   ".fuzzy-files lumine-text-editor[mini]": {
     "alt-enter": "fuzzy-files:open-with",
-    "shift-enter": "fuzzy-files:open-pending",
     "ctrl-alt-enter": "fuzzy-files:open-external",
-    "ctrl-shift-enter": "fuzzy-files:show-in-folder",
+    "alt-shift-enter": "fuzzy-files:show-in-folder",
     "alt-delete": "fuzzy-files:trash",
     "alt-left": "fuzzy-files:split-left",
     "alt-right": "fuzzy-files:split-right",

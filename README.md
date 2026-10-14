@@ -33,7 +33,6 @@ Commands available in `.fuzzy-files`:
 - `fuzzy-files:open`: open the selected file,
 - `fuzzy-files:open-external`: open the file in the default external program,
 - `fuzzy-files:open-with`: choose how and where to open the selected file,
-- `fuzzy-files:open-pending`: open the file as a temporary text editor tab,
 - `fuzzy-files:show-in-folder`: show the file in the system file manager,
 - `fuzzy-files:trash`: move the file to the trash,
 - `fuzzy-files:split-left/right/up/down`: open the file in a split pane,
