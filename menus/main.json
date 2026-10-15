@@ -7,7 +7,7 @@
           "label": "Fuzzy Files",
           "submenu": [
             {
-              "label": "Toggle",
+              "label": "Find Project File…",
               "command": "fuzzy-files:toggle"
             },
             {
