@@ -31,7 +31,7 @@
   },
   "specPackages": [
     "autocomplete",
-    "open-with"
+    "launcher"
   ],
   "scripts": {
     "test": "lumine --test spec",

@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
 
-describe("fuzzy-files native Open With flow", () => {
+describe("fuzzy-files native Launcher flow", () => {
   let main, chooser, host, scratch, selectedPath, background, pane;
 
   beforeEach(async () => {
@@ -15,7 +15,7 @@ describe("fuzzy-files native Open With flow", () => {
     fs.writeFileSync(backgroundPath, "background\n");
     background = await lumine.workspace.open(backgroundPath, { opener: "text-editor" });
     pane = lumine.workspace.paneForItem(background);
-    chooser = (await lumine.packages.activatePackage("open-with")).mainModule;
+    chooser = (await lumine.packages.activatePackage("launcher")).mainModule;
     main = (await lumine.packages.activatePackage("fuzzy-files")).mainModule;
     const item = {
       aPath: selectedPath,
@@ -35,7 +35,7 @@ describe("fuzzy-files native Open With flow", () => {
   });
 
   afterEach(async () => {
-    await lumine.packages.deactivatePackage("open-with");
+    await lumine.packages.deactivatePackage("launcher");
     await lumine.packages.deactivatePackage("fuzzy-files");
     await host.destroy();
     for (const editor of lumine.workspace.getTextEditors())
@@ -53,14 +53,14 @@ describe("fuzzy-files native Open With flow", () => {
   });
 
   async function openChooser() {
-    const result = await host.getModel().runAction("fuzzy-files:open-with");
+    const result = await host.getModel().runAction("fuzzy-files:choose-opener");
     expect(result.status).toBe("success");
     const record = chooser.pickers.get(lumine.workspace.getMainWindow());
     expect(record.context.path).toBe(selectedPath);
     expect(record.context.initialLine).toBe(1);
     expect(record.context.pane).toBe(pane);
     expect(record.host.isVisible()).toBe(true);
-    expect(lumine.workspace.getModalTrail()).toEqual(["Files", "Open With"]);
+    expect(lumine.workspace.getModalTrail()).toEqual(["Files", "Open"]);
     return record.host;
   }
 

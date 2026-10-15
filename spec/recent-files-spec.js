@@ -132,7 +132,7 @@ describe("fuzzy-files recent files", () => {
     const gamma = itemNamed("gamma.txt");
     const open = spyOn(lumine.workspace, "open").and.returnValue(Promise.resolve());
     const choose = jasmine.createSpy("choose opener");
-    const command = lumine.commands.add("lumine-workspace", "open-with:toggle", choose);
+    const command = lumine.commands.add("lumine-workspace", "launcher:open", choose);
     const selectList = await showList();
     const index = selectList.getDisplayedItems().findIndex((item) => item.aPath === gamma.aPath);
     const row = selectList.getElement().querySelectorAll("li[role='option']")[index];
@@ -144,7 +144,7 @@ describe("fuzzy-files recent files", () => {
     const result = await action;
     command.dispose();
 
-    expect(result.command).toBe("fuzzy-files:open-with");
+    expect(result.command).toBe("fuzzy-files:choose-opener");
     expect(choose).toHaveBeenCalledTimes(1);
     expect(choose.calls.mostRecent().args[0].detail.path).toBe(gamma.aPath);
     expect(open).not.toHaveBeenCalled();

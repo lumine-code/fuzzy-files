@@ -5,7 +5,7 @@
     "cmdorctrl-p": "fuzzy-files:toggle"
   },
   ".fuzzy-files lumine-text-editor[mini]": {
-    "alt-enter": "fuzzy-files:open-with",
+    "alt-enter": "fuzzy-files:choose-opener",
     "ctrl-alt-enter": "fuzzy-files:open-external",
     "alt-shift-enter": "fuzzy-files:show-in-folder",
     "alt-delete": "fuzzy-files:trash",
