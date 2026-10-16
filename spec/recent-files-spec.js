@@ -62,7 +62,7 @@ describe("fuzzy-files recent files", () => {
     expect(open).toHaveBeenCalled();
     expect(open.calls.mostRecent().args[0]).toBe(beta.aPath);
     expect(main.recentlyUsed).toEqual([beta.aPath]);
-    expect(main.serialize()).toEqual({ recentlyUsed: [beta.aPath] });
+    expect(main.workspaceState.get("recentlyUsed", [])).toEqual([beta.aPath]);
 
     await showList();
     expect(selectList.getDisplayedItems()[0].aPath).toBe(beta.aPath);
@@ -201,14 +201,24 @@ describe("fuzzy-files recent files", () => {
     expect(main.recentlyUsed).toEqual([itemNamed("gamma.txt").aPath, itemNamed("beta.txt").aPath]);
   });
 
-  it("restores recent files from serialized package state", async () => {
+  it("loads persisted project recents after package reactivation", async () => {
     const betaPath = itemNamed("beta.txt").aPath;
     await main.selectList.recordRecentItem(itemNamed("beta.txt"));
-    const state = main.serialize();
-    main.deactivate();
-
-    main.activate(state);
+    await lumine.packages.deactivatePackage("fuzzy-files");
+    main = (await lumine.packages.activatePackage("fuzzy-files")).mainModule;
 
     expect(main.recentlyUsed).toEqual([betaPath]);
+  });
+  it("projects stored history changes into the existing list and persists the next use", async () => {
+    const list = main.selectList;
+    const restored = itemNamed("beta.txt").aPath;
+    await main.workspaceState.update("recentlyUsed", [restored]);
+    expect(main.selectList).toBe(list);
+    expect(list.getRecentItemIds()).toEqual([restored]);
+    await list.recordRecentItem(itemNamed("alpha.txt"));
+    expect(main.workspaceState.get("recentlyUsed", [])).toEqual([
+      list.getItemId(itemNamed("alpha.txt")),
+      restored,
+    ]);
   });
 });
