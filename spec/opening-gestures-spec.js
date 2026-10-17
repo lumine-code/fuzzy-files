@@ -97,6 +97,24 @@ describe("fuzzy-files standard opening gestures", () => {
     return listener;
   }
 
+  it("opens repeated selections in its captured pane and retains its query", async () => {
+    const pane = host.window.getEditorContainer().getActivePane();
+    await model.runAction("select-list:toggle-keep-open");
+    await model.setQuery("txt");
+    const otherPane = pane.splitRight();
+    otherPane.activate();
+    for (const item of items) {
+      await model.selectItem(item);
+      await model.confirmSelection();
+      expect(host.isVisible()).toBe(true);
+      expect(model.getQuery()).toBe("txt");
+      expect(pane.getActiveItem().getPath()).toBe(item.aPath);
+      expect(open.calls.mostRecent().args[1].pane).toBe(pane);
+    }
+    host.cancel();
+    expect(owner.finders.get(host.window).opening).toBeNull();
+  });
+
   it("Alt-clicks the clicked row into Launcher without invoking the ordinary action", async () => {
     const choose = chooser();
     const result = await click(items[1], { altKey: true });
