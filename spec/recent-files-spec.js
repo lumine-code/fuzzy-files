@@ -42,6 +42,27 @@ describe("fuzzy-files recent files", () => {
     return main.selectList;
   }
 
+  it("keeps the query and selected row without loading again when recent history changes", async () => {
+    const list = await showList();
+    list.setQuery("txt");
+    await lumine.views.getNextUpdatePromise();
+    const item = itemNamed("beta.txt");
+    await list.selectItem(item);
+    const reload = spyOn(list, "reload").and.callThrough();
+    const load = spyOn(main, "loadListSource").and.callThrough();
+    const loading = spyOn(list, "setLoadingState").and.callThrough();
+
+    await main.workspaceState.update("recentlyUsed", [itemNamed("alpha.txt").aPath]);
+    await list.recordRecentItem(item);
+    await lumine.views.getNextUpdatePromise();
+
+    expect(list.getQuery()).toBe("txt");
+    expect(list.getItemId(list.getSelectedItem())).toBe(list.getItemId(item));
+    expect(reload).not.toHaveBeenCalled();
+    expect(load).not.toHaveBeenCalled();
+    expect(loading).not.toHaveBeenCalled();
+  });
+
   function nextAction() {
     return new Promise((resolve) => {
       const disposable = main.selectList.onDidFinishAction((event) => {
