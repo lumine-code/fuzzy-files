@@ -1,9 +1,9 @@
 {
   "title": "fuzzy-files",
   "description": "Find a project file by name.",
-  "recordedOn": "2026-10-14",
-  "sourceRevision": "0336b56e4e40fbb92ca6996ddfcaabf3f916149d",
-  "themeSourceRevision": "14a69683b0e3238e2bc128fbfae3866c1e4ee9c6",
+  "recordedOn": "2026-10-18",
+  "sourceRevision": "4d24e5a6196155669ff7e72bd93c8dc2def5c593",
+  "themeSourceRevision": "45b22049e87256e9327beb0b350e67fe81d7fc81",
   "mode": "normal",
   "fontSettings": "default",
   "scenario": "demo.js",
@@ -11,8 +11,8 @@
   "environment": {
     "platform": "win32",
     "arch": "x64",
-    "electron": "44.7.0",
-    "chrome": "152.0.7977.130",
+    "electron": "44.9.0",
+    "chrome": "152.0.7977.167",
     "devicePixelRatio": 1,
     "locale": "en-GB",
     "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
@@ -21,26 +21,27 @@
   },
   "viewport": { "width": 1100, "height": 720 },
   "cornerRadius": 10,
+  "privacy": { "version": 1, "location": "neutral", "textChecked": true },
   "sources": {
     "editor": {
-      "revision": "385bd1b3ac2db600f1c7e077474d9da4d6deebc4",
-      "dirty": true,
-      "workingTreeHash": "0fa935626a1db13861a0b78ef5c3d890e0a6bff80b25da2fac6e9889910defe0"
+      "revision": "10950c83cb6d964aadbcf4036af67c6484c1341d",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "package": {
-      "revision": "0336b56e4e40fbb92ca6996ddfcaabf3f916149d",
-      "dirty": true,
-      "workingTreeHash": "a5ee55183c16bb1264cc1e6997bbf214e78c8cd89722431146ff0f35cd2b529d"
+      "revision": "4d24e5a6196155669ff7e72bd93c8dc2def5c593",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "fuzzy-files": {
-      "revision": "0336b56e4e40fbb92ca6996ddfcaabf3f916149d",
-      "dirty": true,
-      "workingTreeHash": "a5ee55183c16bb1264cc1e6997bbf214e78c8cd89722431146ff0f35cd2b529d"
+      "revision": "4d24e5a6196155669ff7e72bd93c8dc2def5c593",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "one-theme": {
-      "revision": "14a69683b0e3238e2bc128fbfae3866c1e4ee9c6",
-      "dirty": true,
-      "workingTreeHash": "50ec2f83a6347dd8113870992ec4eb2be4014f3d9e12213c2f51b543f1eca793"
+      "revision": "45b22049e87256e9327beb0b350e67fe81d7fc81",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     }
   },
   "fixtures": [
@@ -55,7 +56,7 @@
       "label": "Find a project file by name.",
       "width": 1100,
       "height": 720,
-      "sha256": "8496337bdbc7170ad943fc49371c0f8e2309d2f013176a99be2c391dd6934957"
+      "sha256": "608339a54e2b06f7d83c97ec82ac0fa4926a18c03a43f85cb121813091f3c6d6"
     }
   ]
 }
