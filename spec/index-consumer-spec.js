@@ -169,6 +169,23 @@ describe("fuzzy-files as a file-index consumer", () => {
     expect(alpha.distance).toBe(2);
   });
 
+  it("preserves depth weighting and modifier order after path metadata is prepared", async () => {
+    await activate();
+    const item = main.itemsByPath.get(path.join(dir, "sub", "gamma.js"));
+    item.distance = 3;
+    const modifier = jasmine.createSpy("modifier").and.callFake((score) => score * 2);
+    main.scoreModifiers.push(modifier);
+    try {
+      const expected = 0.75 / (3 * Math.sqrt(2));
+      expect(main.modifyScore(0.75, item)).toBe(expected * 2);
+      expect(modifier).toHaveBeenCalledWith(expected, item);
+      item.fPath = "one/two/three/file.js";
+      expect(main.modifyScore(0.75, item)).toBe((0.75 / (3 * Math.sqrt(4))) * 2);
+    } finally {
+      main.scoreModifiers.splice(main.scoreModifiers.indexOf(modifier), 1);
+    }
+  });
+
   it("refreshes the shared index rather than a cache of its own", async () => {
     await activate();
     await main.selectList.runAction("fuzzy-files:refresh-index");
