@@ -94,8 +94,7 @@ describe("fuzzy-files recent files", () => {
     // Under a query the rows are ranked by score, so the recent section
     // stands down. The identifier does not change with it — the list decides
     // when the section applies, not the identity of the items in it.
-    selectList.getQueryEditor().setText("alpha");
-    await lumine.views.getNextUpdatePromise();
+    await selectList.setQuery("alpha");
     expect(selectList.getItemId(beta)).toBe(beta.aPath);
     expect(selectList.getElement().querySelector(".select-list-separator")).toBeNull();
 

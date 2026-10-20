@@ -43,12 +43,17 @@ describe("window-local file finders", () => {
     await remote.model.setQuery("first");
     expect(local.model.getQuery()).toBe("second");
     expect(remote.model.getQuery()).toBe("first");
+    const remoteWorker = remote.model.workerPreparation;
+    const syncList = spyOn(main, "syncList").and.callThrough();
     await local.model.selectItem(
       local.model.getItems().find((item) => item.aPath === second.getPath()),
     );
     await local.model.runAction("fuzzy-files:split-right");
     expect(mainWindow.getEditorContainer().getPanes().length).toBe(2);
     expect(extra.getEditorContainer().getPanes().length).toBe(1);
+    expect(syncList).not.toHaveBeenCalled();
+    expect(remote.model.isFiltering()).toBe(false);
+    expect(remote.model.workerPreparation).toBe(remoteWorker);
     await remote.model.selectItem(
       remote.model.getItems().find((item) => item.aPath === first.getPath()),
     );
@@ -57,5 +62,19 @@ describe("window-local file finders", () => {
       first.getPath(),
     );
     expect(local.model.getRecentItemIds()).toEqual(remote.model.getRecentItemIds());
+
+    await local.host.show({ query: "second" });
+    await remote.host.show({ query: "first" });
+    const unchangedRemote = remote.model.workerPreparation;
+    syncList.calls.reset();
+    await workspace.open(path.join(directory, "child", "scratch.txt"), {
+      pane: mainWindow.getEditorContainer().getActivePane(),
+    });
+    await local.model.queryWork?.promise;
+    expect(syncList).toHaveBeenCalled();
+    expect(syncList.calls.allArgs().every(([, window]) => window === mainWindow)).toBe(true);
+    expect(local.model.getFilteredItems()[0].rPath).toBe(path.join("..", "second.txt"));
+    expect(remote.model.workerPreparation).toBe(unchangedRemote);
+    expect(remote.model.getFilteredItems()[0].rPath).toBe("first.txt");
   });
 });
