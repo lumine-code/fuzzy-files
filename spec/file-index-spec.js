@@ -91,7 +91,8 @@ describe("file metadata worker", () => {
     create();
     await index.apply([file("a.js")], []);
     const controller = new AbortController();
-    controller.abort();
+    // DialogSource uses string reasons, not just the default DOMException.
+    controller.abort("closed");
     await expectAsync(index.snapshot(null, null, controller.signal)).toBeRejected();
     await index.apply([file("b.js")], []);
     expect((await index.snapshot(null)).items.length).toBe(2);
