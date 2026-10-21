@@ -73,17 +73,19 @@ describe("File proximity command context", () => {
     );
     await lumine.commands.dispatch(origin, "fuzzy-files:toggle");
     const record = main.finders.get(lumine.workspace.getMainWindow());
-    const original = record.proximity;
-    expect(original.files.size).toBe(2);
+    const original = record.snapshot;
+    expect(original.items.length).toBe(2);
     origin.getPath = () => path.join(root, "far", "document.pdf");
     main.activeItemPathChanged();
-    await record.model.update({});
-    expect(record.proximity).not.toBe(original);
+    await main.syncList({}, record.window);
+    expect(record.snapshot).not.toBe(original);
     expect(distances(record.model)[path.join("far", "alpha.txt")]).toBe(1);
-    const current = record.proximity;
+    const current = record.snapshot;
     emit({ added: [], removed: [path.join(root, "near", "alpha.txt")], indexing: false });
-    await record.model.update({});
-    expect(current.files.size).toBe(1);
-    expect(current.files.has(path.join(root, "near", "alpha.txt"))).toBe(false);
+    await main.whenPrepared();
+    expect(record.snapshot.items.length).toBe(1);
+    expect(record.snapshot.items[0]).toBe(
+      current.items.find((item) => item.fPath === path.join("far", "alpha.txt")),
+    );
   });
 });

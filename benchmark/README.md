@@ -1,5 +1,7 @@
 # Large-list opening measurements
 
+The [background preparation follow-up](background-opening-2026-10-21.md) supersedes the remaining-cost findings below: it measures snapshot reuse, background metadata preparation and incremental index updates on the same corpora.
+
 Measured on Windows on 2026-10-21, with Electron 44.9.0 and Node 24.22.0. These measurements cover opening the real package list against an already available project index. They do not include the filesystem crawl, package activation, host creation or loading the benchmark input JSON.
 
 ## Paired comparison

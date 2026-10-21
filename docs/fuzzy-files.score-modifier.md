@@ -44,7 +44,7 @@ type Item = {
 
 The reference is the pane item from which the finder was invoked, captured before the panel takes focus. Any pane item with an absolute filesystem path participates, including PDFs, images and notebooks; an item without such a path has neutral distance `1`. Activating another pane does not replace this reference. Moving the original item's path refreshes the distances in its window.
 
-Distances preserve the previous relative-path-depth weighting, with cached calculations shared by directories and source paths. Ranking no longer allocates a relative-path string for every candidate on every opening. File actions still calculate the selected path string when needed. Source changes clear the caches, and a different reference directory creates a new cache.
+Distances preserve the previous relative-path-depth weighting, with cached calculations shared by directories and source paths. A package-owned background process prepares metadata and proximity; each finder retains its own immutable snapshot, while filtering still uses a worker per list. Reopening with unchanged data and reference directory reuses the snapshot. Added and removed paths update metadata incrementally and are merged into the existing order; changed exclusions or project roots rebuild the shared metadata. File actions calculate the selected relative-path string when needed. Score modifiers must treat snapshot items as read-only.
 
 ## Minimal example
 

@@ -85,6 +85,7 @@ describe("fuzzy-files as a file-index consumer", () => {
   it("does not touch the index when its ignored names change before first open", async () => {
     await activate("fuzzy-files:clear-recent");
     lumine.config.set("fuzzy-files.ignoredNames", ["*.log"]);
+    await main?.whenPrepared();
     expect(lumine.project.observeFilePaths).not.toHaveBeenCalled();
     expect(lumine.project.getFilePaths).not.toHaveBeenCalled();
   });
@@ -100,7 +101,7 @@ describe("fuzzy-files as a file-index consumer", () => {
 
   it("lists paths in order with an empty query", async () => {
     await activate();
-    main.materialize();
+    await main.materialize();
     // The index is unsorted, and this is the only place the order shows: the
     // first page of an unqueried list is otherwise arbitrary and reshuffles on
     // every crawl.
@@ -114,9 +115,11 @@ describe("fuzzy-files as a file-index consumer", () => {
   it("applies its own ignored names and not core's", async () => {
     await activate();
     lumine.config.set("fuzzy-files.ignoredNames", ["*.js"]);
+    await main?.whenPrepared();
     expect(main.itemsByPath.size).toBe(0);
 
     lumine.config.set("fuzzy-files.ignoredNames", []);
+    await main?.whenPrepared();
     expect(main.itemsByPath.size).toBe(3);
 
     // `core.ignoredNames` is the index's policy: whatever it excludes never
@@ -129,6 +132,7 @@ describe("fuzzy-files as a file-index consumer", () => {
   it("uses ignored-name directory semantics for descendants", async () => {
     await activate();
     lumine.config.set("fuzzy-files.ignoredNames", ["sub"]);
+    await main?.whenPrepared();
     expect(main.itemsByPath.has(path.join(dir, "sub", "gamma.js"))).toBe(false);
     expect(main.itemsByPath.size).toBe(2);
   });
@@ -136,22 +140,27 @@ describe("fuzzy-files as a file-index consumer", () => {
   it("adds and drops items as the index reports them", async () => {
     await activate();
     emit({ added: [path.join(dir, "delta.js")] });
+    await main.whenPrepared();
     expect(main.itemsByPath.has(path.join(dir, "delta.js"))).toBe(true);
 
     emit({ removed: [path.join(dir, "alpha.js")] });
+    await main.whenPrepared();
     expect(main.itemsByPath.has(path.join(dir, "alpha.js"))).toBe(false);
   });
 
   it("filters a path the index adds but this package excludes", async () => {
     await activate();
     lumine.config.set("fuzzy-files.ignoredNames", ["*.log"]);
+    await main?.whenPrepared();
     emit({ added: [path.join(dir, "noisy.log")] });
+    await main.whenPrepared();
     expect(main.itemsByPath.has(path.join(dir, "noisy.log"))).toBe(false);
   });
 
   it("counts what it lists, not what the index holds", async () => {
     await activate();
     lumine.config.set("fuzzy-files.ignoredNames", ["alpha.js"]);
+    await main?.whenPrepared();
     expect(main.infoLine()).toBe("2 files in 1 project");
   });
 
@@ -162,9 +171,8 @@ describe("fuzzy-files as a file-index consumer", () => {
     fs.writeFileSync(editorPath, "");
     await lumine.workspace.open(editorPath);
 
-    main.materialize();
-    main.relativize();
-    const alpha = main.itemsByPath.get(path.join(dir, "alpha.js"));
+    await main.materialize();
+    const alpha = main.items.find((item) => item.aPath === path.join(dir, "alpha.js"));
     expect(alpha.rPath).toBeUndefined();
     expect(alpha.distance).toBe(2);
   });
@@ -177,6 +185,52 @@ describe("fuzzy-files as a file-index consumer", () => {
     expect(build.calls.count()).toBe(1);
     expect(host.getModel().getItemCount()).toBe(3);
     expect(host.getModel().isLoading()).toBe(false);
+  });
+
+  it("reopens without reconstructing records or restarting the filtering worker", async () => {
+    await activate();
+    const host = main.ensureFinder(),
+      list = host.getModel();
+    await list.workerPreparation?.promise;
+    const records = list.model._records,
+      preparation = list.workerPreparation;
+    const build = spyOn(list.model, "_recordBuilder").and.callThrough();
+    host.hide();
+    await host.show();
+    expect(list.model._records).toBe(records);
+    expect(list.workerPreparation).toBe(preparation);
+    expect(build).not.toHaveBeenCalled();
+  });
+
+  it("includes index changes that arrive while the opening snapshot is being prepared", async () => {
+    jasmine.useRealClock();
+    await activate("fuzzy-files:clear-recent");
+    const host = main.ensureFinder(),
+      list = host.getModel();
+    const prepare = list.prepareItems.bind(list);
+    let release, began;
+    const gate = new Promise((resolve) => {
+      release = resolve;
+    });
+    const started = new Promise((resolve) => {
+      began = resolve;
+    });
+    let first = true;
+    spyOn(list, "prepareItems").and.callFake(async (...args) => {
+      if (first) {
+        first = false;
+        began();
+        await gate;
+      }
+      return prepare(...args);
+    });
+    const opening = host.show();
+    await started;
+    emit({ added: [path.join(dir, "late.js")] });
+    release();
+    await opening;
+    expect(list.getItems().map((item) => item.nPath)).toContain("late.js");
+    expect(list.getItemCount()).toBe(4);
   });
 
   it("preserves depth weighting and modifier order after path metadata is prepared", async () => {

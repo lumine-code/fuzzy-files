@@ -21,7 +21,7 @@ describe("fuzzy-files recent files", () => {
     await opening;
     main = lumine.packages.getLoadedPackage("fuzzy-files").mainModule;
     await main.whenIndexed();
-    main.materialize();
+    await main.materialize();
     main.selectListHost.hide();
     await main.selectList.clearRecentItems();
   });

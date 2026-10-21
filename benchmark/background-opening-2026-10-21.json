@@ -1,0 +1,429 @@
+{
+  "date": "2026-10-21",
+  "platform": "win32",
+  "unit": "milliseconds",
+  "runs": [
+    {
+      "config": {
+        "reopens": 3,
+        "verifyQueries": true,
+        "delta": true,
+        "label": "worker-final-a"
+      },
+      "runtime": {
+        "node": "24.22.0",
+        "acorn": "8.18.0",
+        "ada": "4.0.0",
+        "amaro": "1.1.11",
+        "ares": "1.34.8",
+        "brotli": "1.2.0",
+        "cldr": "48.0",
+        "icu": "78.2",
+        "llhttp": "9.4.3",
+        "merve": "1.2.2",
+        "modules": "149",
+        "napi": "10",
+        "nbytes": "0.1.4",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.70.0",
+        "nghttp3": "",
+        "ngtcp2": "",
+        "openssl": "0.0.0",
+        "simdjson": "4.6.11",
+        "simdutf": "7.7.0",
+        "sqlite": "3.53.4",
+        "tz": "2026d",
+        "undici": "7.29.1",
+        "unicode": "17.0",
+        "uv": "1.52.1",
+        "uvwasi": "0.0.23",
+        "v8": "15.2.124.43-electron.0",
+        "zlib": "1.3.2.1-motley",
+        "zstd": "1.6.0",
+        "electron": "44.9.0",
+        "chrome": "152.0.7977.167"
+      },
+      "sourceHashes": {
+        "fuzzy-explorer": "ece7a369161f6d6b3f9a5ed640223aa651727d2ab6c1cf5662b0456763cd69f0",
+        "fuzzy-files": "8a47c751c5958502491c7070b04138c79b35a02022802c5b9a28c56b3ba9c987",
+        "proximity": "37b7e2ce8eab720123e37b4f82c6f4282061ce9a4f9cfb69eb951dd6fd8f8525",
+        "select-list": "80e5e5d7811fd984108c217fc6aced723dccf10829cafce012524245489b0fce",
+        "select-list-model": "e592de1e25ad7ff785356cb302e6f70ca844032bc4580c8d0bd418ed44b4b9c3",
+        "dialog-source": "3299ce368d9653779f53be05063651a3e80e49713c42b39e5cf1577a03b8ae0a",
+        "input-dialog": "0eb3e175ec2ab8212795ba609aa1df973f353a8d562ebbc4d87663c95c80c726"
+      },
+      "driverHash": "e37984dc972e783749ad6c3ec9d18c638b25157868df6e68ae741bbd9a56246a",
+      "corpusHashes": {
+        "explorer": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484",
+        "project": "4d74fd0199762b6b625388a2c0164f6cc22ad46ca9541624a2aee8c53730a756"
+      },
+      "samples": [
+        {
+          "package": "fuzzy-explorer",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 18,
+          "total": 56.79999998211861,
+          "largestTimerGap": 56.79999998211861,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 6.899999976158142,
+          "total": 19.5,
+          "largestTimerGap": 11.5,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 6.699999988079071,
+          "total": 14.400000005960464,
+          "largestTimerGap": 14.400000005960464,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 6.5999999940395355,
+          "total": 19.5,
+          "largestTimerGap": 7.5,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 18.19999998807907,
+          "total": 4602.9000000059605,
+          "largestTimerGap": 32.400000005960464,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 7.800000011920929,
+          "total": 15.900000005960464,
+          "largestTimerGap": 15.900000005960464,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 9.199999988079071,
+          "total": 18.599999994039536,
+          "largestTimerGap": 18.599999994039536,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 7.700000017881393,
+          "total": 15.400000005960464,
+          "largestTimerGap": 15.400000005960464,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        }
+      ],
+      "queryHashes": [
+        {
+          "package": "fuzzy-explorer",
+          "query": "s",
+          "count": 29375,
+          "hash": "9bb53bd48c14579cbe5ea9c91c167a1a5a3629f639d0b95ee4e51460d83c8355"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "query": "se",
+          "count": 27558,
+          "hash": "61e7cc79e11dfd2c6b60c6939847a912d41d5615babc786077022e37344d5002"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "query": "sel",
+          "count": 8553,
+          "hash": "21392ed79c4f6ea416d62bf201c2f88abf340e180fb3a6faa9f8b25f95c1b4d5"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "s",
+          "count": 498950,
+          "hash": "f738513b4a21915dedb4946c6abe3cce27755402f87ee07d08e6b6acde77b1d6"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "se",
+          "count": 492626,
+          "hash": "aa812de9567a97c7314f79640e15f3f0b646dd78b18327b9a9dc5d86b20068b1"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "sel",
+          "count": 443288,
+          "hash": "3a8c441d902b7653acb0f8a5b47d6c6593f56d5a5f10718166c0aa46204c7a5d"
+        }
+      ],
+      "deltas": [
+        {
+          "revert": false,
+          "total": 462.2999999821186,
+          "largestTimerGap": 24.900000005960464,
+          "count": 500000,
+          "hash": "bf70005db0bcc3c520c643920ac5368294677794c92ad47b04daca5a7b055faf"
+        },
+        {
+          "revert": true,
+          "total": 514.0999999940395,
+          "largestTimerGap": 24.599999994039536,
+          "count": 500000,
+          "hash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b"
+        }
+      ]
+    },
+    {
+      "config": {
+        "reopens": 3,
+        "verifyQueries": true,
+        "delta": true,
+        "label": "worker-final-b"
+      },
+      "runtime": {
+        "node": "24.22.0",
+        "acorn": "8.18.0",
+        "ada": "4.0.0",
+        "amaro": "1.1.11",
+        "ares": "1.34.8",
+        "brotli": "1.2.0",
+        "cldr": "48.0",
+        "icu": "78.2",
+        "llhttp": "9.4.3",
+        "merve": "1.2.2",
+        "modules": "149",
+        "napi": "10",
+        "nbytes": "0.1.4",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.70.0",
+        "nghttp3": "",
+        "ngtcp2": "",
+        "openssl": "0.0.0",
+        "simdjson": "4.6.11",
+        "simdutf": "7.7.0",
+        "sqlite": "3.53.4",
+        "tz": "2026d",
+        "undici": "7.29.1",
+        "unicode": "17.0",
+        "uv": "1.52.1",
+        "uvwasi": "0.0.23",
+        "v8": "15.2.124.43-electron.0",
+        "zlib": "1.3.2.1-motley",
+        "zstd": "1.6.0",
+        "electron": "44.9.0",
+        "chrome": "152.0.7977.167"
+      },
+      "sourceHashes": {
+        "fuzzy-explorer": "ece7a369161f6d6b3f9a5ed640223aa651727d2ab6c1cf5662b0456763cd69f0",
+        "fuzzy-files": "8a47c751c5958502491c7070b04138c79b35a02022802c5b9a28c56b3ba9c987",
+        "proximity": "37b7e2ce8eab720123e37b4f82c6f4282061ce9a4f9cfb69eb951dd6fd8f8525",
+        "select-list": "3412eb33b87e1c3290bf2c85e7a0bfcf38019e8e0df148d6359a7bf3420fa64e",
+        "select-list-model": "e592de1e25ad7ff785356cb302e6f70ca844032bc4580c8d0bd418ed44b4b9c3",
+        "dialog-source": "3299ce368d9653779f53be05063651a3e80e49713c42b39e5cf1577a03b8ae0a",
+        "input-dialog": "0eb3e175ec2ab8212795ba609aa1df973f353a8d562ebbc4d87663c95c80c726"
+      },
+      "driverHash": "e37984dc972e783749ad6c3ec9d18c638b25157868df6e68ae741bbd9a56246a",
+      "corpusHashes": {
+        "explorer": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484",
+        "project": "4d74fd0199762b6b625388a2c0164f6cc22ad46ca9541624a2aee8c53730a756"
+      },
+      "samples": [
+        {
+          "package": "fuzzy-explorer",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 17.69999998807907,
+          "total": 55.900000005960464,
+          "largestTimerGap": 55.900000005960464,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 7.300000011920929,
+          "total": 15.800000011920929,
+          "largestTimerGap": 15.800000011920929,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 6.800000011920929,
+          "total": 22.30000001192093,
+          "largestTimerGap": 10.300000011920929,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 6.699999988079071,
+          "total": 14,
+          "largestTimerGap": 14,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 17.5,
+          "total": 4530.5,
+          "largestTimerGap": 32.10000002384186,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 9,
+          "total": 18.80000001192093,
+          "largestTimerGap": 18.80000001192093,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 8,
+          "total": 15.800000011920929,
+          "largestTimerGap": 15.800000011920929,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 7.5999999940395355,
+          "total": 15.199999988079071,
+          "largestTimerGap": 15.199999988079071,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        }
+      ],
+      "queryHashes": [
+        {
+          "package": "fuzzy-explorer",
+          "query": "s",
+          "count": 29375,
+          "hash": "9bb53bd48c14579cbe5ea9c91c167a1a5a3629f639d0b95ee4e51460d83c8355"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "query": "se",
+          "count": 27558,
+          "hash": "61e7cc79e11dfd2c6b60c6939847a912d41d5615babc786077022e37344d5002"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "query": "sel",
+          "count": 8553,
+          "hash": "21392ed79c4f6ea416d62bf201c2f88abf340e180fb3a6faa9f8b25f95c1b4d5"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "s",
+          "count": 498950,
+          "hash": "f738513b4a21915dedb4946c6abe3cce27755402f87ee07d08e6b6acde77b1d6"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "se",
+          "count": 492626,
+          "hash": "aa812de9567a97c7314f79640e15f3f0b646dd78b18327b9a9dc5d86b20068b1"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "sel",
+          "count": 443288,
+          "hash": "3a8c441d902b7653acb0f8a5b47d6c6593f56d5a5f10718166c0aa46204c7a5d"
+        }
+      ],
+      "deltas": [
+        {
+          "revert": false,
+          "total": 447.90000000596046,
+          "largestTimerGap": 23.80000001192093,
+          "count": 500000,
+          "hash": "bf70005db0bcc3c520c643920ac5368294677794c92ad47b04daca5a7b055faf"
+        },
+        {
+          "revert": true,
+          "total": 461.7000000178814,
+          "largestTimerGap": 23.69999998807907,
+          "count": 500000,
+          "hash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b"
+        }
+      ]
+    }
+  ]
+}
