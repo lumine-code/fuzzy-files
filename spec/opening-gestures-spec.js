@@ -23,7 +23,6 @@ describe("fuzzy-files standard opening gestures", () => {
       aPath,
       pPath: scratch,
       fPath: path.basename(aPath),
-      rPath: path.basename(aPath),
       distance: 1,
     }));
     spyOn(owner, "loadListSource").and.resolveTo({ items });

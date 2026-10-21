@@ -1,0 +1,709 @@
+{
+  "date": "2026-10-21",
+  "platform": "win32",
+  "unit": "milliseconds",
+  "runs": [
+    {
+      "config": {
+        "reopens": 3,
+        "verifyQueries": true,
+        "baseline": true,
+        "label": "paired-before-a"
+      },
+      "runtime": {
+        "node": "24.22.0",
+        "acorn": "8.18.0",
+        "ada": "4.0.0",
+        "amaro": "1.1.11",
+        "ares": "1.34.8",
+        "brotli": "1.2.0",
+        "cldr": "48.0",
+        "icu": "78.2",
+        "llhttp": "9.4.3",
+        "merve": "1.2.2",
+        "modules": "149",
+        "napi": "10",
+        "nbytes": "0.1.4",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.70.0",
+        "nghttp3": "",
+        "ngtcp2": "",
+        "openssl": "0.0.0",
+        "simdjson": "4.6.11",
+        "simdutf": "7.7.0",
+        "sqlite": "3.53.4",
+        "tz": "2026d",
+        "undici": "7.29.1",
+        "unicode": "17.0",
+        "uv": "1.52.1",
+        "uvwasi": "0.0.23",
+        "v8": "15.2.124.43-electron.0",
+        "zlib": "1.3.2.1-motley",
+        "zstd": "1.6.0",
+        "electron": "44.9.0",
+        "chrome": "152.0.7977.167"
+      },
+      "sourceHashes": {
+        "fuzzy-explorer": "565abd7f2a59f8aac93ece4afe252f56684706fc9f16c146283dd10f638b4673",
+        "fuzzy-files": "f67bed5b767b35268c4c25587f5e5dcd502417485123cc2bd9ff5e8ab78bedea",
+        "proximity": "37b7e2ce8eab720123e37b4f82c6f4282061ce9a4f9cfb69eb951dd6fd8f8525",
+        "select-list": "ea34b77be7f108906d02f980df62c434502c852e8594b0f95637e0ceceb736b1",
+        "select-list-model": "9b8106fb02098569c89c11ccfcbd7976c6640b66d0098975a497c8d95df9c927",
+        "dialog-source": "3299ce368d9653779f53be05063651a3e80e49713c42b39e5cf1577a03b8ae0a",
+        "input-dialog": "0eb3e175ec2ab8212795ba609aa1df973f353a8d562ebbc4d87663c95c80c726"
+      },
+      "driverHash": "7b968327c8ba229397d2c50350d65db5a7bb67140f593437e295159d535f2723",
+      "corpusHashes": {
+        "explorer": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484",
+        "project": "4d74fd0199762b6b625388a2c0164f6cc22ad46ca9541624a2aee8c53730a756"
+      },
+      "samples": [
+        {
+          "package": "fuzzy-explorer",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 17.69999998807907,
+          "total": 58.900000005960464,
+          "largestTimerGap": 58.900000005960464,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 9.400000005960464,
+          "total": 28.69999998807907,
+          "largestTimerGap": 28.69999998807907,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 8.700000017881393,
+          "total": 25,
+          "largestTimerGap": 25.099999994039536,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 8.800000011920929,
+          "total": 24.600000023841858,
+          "largestTimerGap": 24.600000023841858,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 5150.800000011921,
+          "total": 6503.0999999940395,
+          "largestTimerGap": 6503.0999999940395,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 37,
+          "total": 1655,
+          "largestTimerGap": 1655,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 33.900000005960464,
+          "total": 1444,
+          "largestTimerGap": 1444,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 38,
+          "total": 1402.5,
+          "largestTimerGap": 1402.5,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        }
+      ],
+      "queryHashes": [
+        {
+          "package": "fuzzy-explorer",
+          "query": "s",
+          "count": 29375,
+          "hash": "9bb53bd48c14579cbe5ea9c91c167a1a5a3629f639d0b95ee4e51460d83c8355"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "query": "se",
+          "count": 27558,
+          "hash": "61e7cc79e11dfd2c6b60c6939847a912d41d5615babc786077022e37344d5002"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "query": "sel",
+          "count": 8553,
+          "hash": "21392ed79c4f6ea416d62bf201c2f88abf340e180fb3a6faa9f8b25f95c1b4d5"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "s",
+          "count": 498950,
+          "hash": "f738513b4a21915dedb4946c6abe3cce27755402f87ee07d08e6b6acde77b1d6"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "se",
+          "count": 492626,
+          "hash": "aa812de9567a97c7314f79640e15f3f0b646dd78b18327b9a9dc5d86b20068b1"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "sel",
+          "count": 443288,
+          "hash": "3a8c441d902b7653acb0f8a5b47d6c6593f56d5a5f10718166c0aa46204c7a5d"
+        }
+      ]
+    },
+    {
+      "config": {
+        "reopens": 3,
+        "verifyQueries": true,
+        "label": "paired-after-a"
+      },
+      "runtime": {
+        "node": "24.22.0",
+        "acorn": "8.18.0",
+        "ada": "4.0.0",
+        "amaro": "1.1.11",
+        "ares": "1.34.8",
+        "brotli": "1.2.0",
+        "cldr": "48.0",
+        "icu": "78.2",
+        "llhttp": "9.4.3",
+        "merve": "1.2.2",
+        "modules": "149",
+        "napi": "10",
+        "nbytes": "0.1.4",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.70.0",
+        "nghttp3": "",
+        "ngtcp2": "",
+        "openssl": "0.0.0",
+        "simdjson": "4.6.11",
+        "simdutf": "7.7.0",
+        "sqlite": "3.53.4",
+        "tz": "2026d",
+        "undici": "7.29.1",
+        "unicode": "17.0",
+        "uv": "1.52.1",
+        "uvwasi": "0.0.23",
+        "v8": "15.2.124.43-electron.0",
+        "zlib": "1.3.2.1-motley",
+        "zstd": "1.6.0",
+        "electron": "44.9.0",
+        "chrome": "152.0.7977.167"
+      },
+      "sourceHashes": {
+        "fuzzy-explorer": "565abd7f2a59f8aac93ece4afe252f56684706fc9f16c146283dd10f638b4673",
+        "fuzzy-files": "456c5d500aa049bad868ed07165b83bd3ac2e8e3117eb790126000849d7c13e4",
+        "proximity": "37b7e2ce8eab720123e37b4f82c6f4282061ce9a4f9cfb69eb951dd6fd8f8525",
+        "select-list": "ea34b77be7f108906d02f980df62c434502c852e8594b0f95637e0ceceb736b1",
+        "select-list-model": "9b8106fb02098569c89c11ccfcbd7976c6640b66d0098975a497c8d95df9c927",
+        "dialog-source": "3299ce368d9653779f53be05063651a3e80e49713c42b39e5cf1577a03b8ae0a",
+        "input-dialog": "0eb3e175ec2ab8212795ba609aa1df973f353a8d562ebbc4d87663c95c80c726"
+      },
+      "driverHash": "7b968327c8ba229397d2c50350d65db5a7bb67140f593437e295159d535f2723",
+      "corpusHashes": {
+        "explorer": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484",
+        "project": "4d74fd0199762b6b625388a2c0164f6cc22ad46ca9541624a2aee8c53730a756"
+      },
+      "samples": [
+        {
+          "package": "fuzzy-explorer",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 18.099999994039536,
+          "total": 60.30000001192093,
+          "largestTimerGap": 60.30000001192093,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 9.699999988079071,
+          "total": 29.19999998807907,
+          "largestTimerGap": 29.19999998807907,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 9.799999982118607,
+          "total": 28.099999994039536,
+          "largestTimerGap": 28.099999994039536,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 8.300000011920929,
+          "total": 24,
+          "largestTimerGap": 24,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 3179.7000000178814,
+          "total": 4504.5,
+          "largestTimerGap": 4504.5,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 29.099999994039536,
+          "total": 411.5,
+          "largestTimerGap": 411.5,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 32.400000005960464,
+          "total": 414,
+          "largestTimerGap": 414,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 32.900000005960464,
+          "total": 445.10000002384186,
+          "largestTimerGap": 445.10000002384186,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        }
+      ],
+      "queryHashes": [
+        {
+          "package": "fuzzy-explorer",
+          "query": "s",
+          "count": 29375,
+          "hash": "9bb53bd48c14579cbe5ea9c91c167a1a5a3629f639d0b95ee4e51460d83c8355"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "query": "se",
+          "count": 27558,
+          "hash": "61e7cc79e11dfd2c6b60c6939847a912d41d5615babc786077022e37344d5002"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "query": "sel",
+          "count": 8553,
+          "hash": "21392ed79c4f6ea416d62bf201c2f88abf340e180fb3a6faa9f8b25f95c1b4d5"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "s",
+          "count": 498950,
+          "hash": "f738513b4a21915dedb4946c6abe3cce27755402f87ee07d08e6b6acde77b1d6"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "se",
+          "count": 492626,
+          "hash": "aa812de9567a97c7314f79640e15f3f0b646dd78b18327b9a9dc5d86b20068b1"
+        },
+        {
+          "package": "fuzzy-files",
+          "query": "sel",
+          "count": 443288,
+          "hash": "3a8c441d902b7653acb0f8a5b47d6c6593f56d5a5f10718166c0aa46204c7a5d"
+        }
+      ]
+    },
+    {
+      "config": {
+        "reopens": 3,
+        "label": "paired-after-b"
+      },
+      "runtime": {
+        "node": "24.22.0",
+        "acorn": "8.18.0",
+        "ada": "4.0.0",
+        "amaro": "1.1.11",
+        "ares": "1.34.8",
+        "brotli": "1.2.0",
+        "cldr": "48.0",
+        "icu": "78.2",
+        "llhttp": "9.4.3",
+        "merve": "1.2.2",
+        "modules": "149",
+        "napi": "10",
+        "nbytes": "0.1.4",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.70.0",
+        "nghttp3": "",
+        "ngtcp2": "",
+        "openssl": "0.0.0",
+        "simdjson": "4.6.11",
+        "simdutf": "7.7.0",
+        "sqlite": "3.53.4",
+        "tz": "2026d",
+        "undici": "7.29.1",
+        "unicode": "17.0",
+        "uv": "1.52.1",
+        "uvwasi": "0.0.23",
+        "v8": "15.2.124.43-electron.0",
+        "zlib": "1.3.2.1-motley",
+        "zstd": "1.6.0",
+        "electron": "44.9.0",
+        "chrome": "152.0.7977.167"
+      },
+      "sourceHashes": {
+        "fuzzy-explorer": "565abd7f2a59f8aac93ece4afe252f56684706fc9f16c146283dd10f638b4673",
+        "fuzzy-files": "456c5d500aa049bad868ed07165b83bd3ac2e8e3117eb790126000849d7c13e4",
+        "proximity": "37b7e2ce8eab720123e37b4f82c6f4282061ce9a4f9cfb69eb951dd6fd8f8525",
+        "select-list": "ea34b77be7f108906d02f980df62c434502c852e8594b0f95637e0ceceb736b1",
+        "select-list-model": "9b8106fb02098569c89c11ccfcbd7976c6640b66d0098975a497c8d95df9c927",
+        "dialog-source": "3299ce368d9653779f53be05063651a3e80e49713c42b39e5cf1577a03b8ae0a",
+        "input-dialog": "0eb3e175ec2ab8212795ba609aa1df973f353a8d562ebbc4d87663c95c80c726"
+      },
+      "driverHash": "7b968327c8ba229397d2c50350d65db5a7bb67140f593437e295159d535f2723",
+      "corpusHashes": {
+        "explorer": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484",
+        "project": "4d74fd0199762b6b625388a2c0164f6cc22ad46ca9541624a2aee8c53730a756"
+      },
+      "samples": [
+        {
+          "package": "fuzzy-explorer",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 18.5,
+          "total": 61,
+          "largestTimerGap": 61,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 14.599999994039536,
+          "total": 46,
+          "largestTimerGap": 46,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 8.5,
+          "total": 25.099999994039536,
+          "largestTimerGap": 25.099999994039536,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 8.799999982118607,
+          "total": 27.19999998807907,
+          "largestTimerGap": 27.19999998807907,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 3268,
+          "total": 4607.0999999940395,
+          "largestTimerGap": 4607.0999999940395,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 31.400000005960464,
+          "total": 437,
+          "largestTimerGap": 437,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 31.80000001192093,
+          "total": 427.10000002384186,
+          "largestTimerGap": 427.10000002384186,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 33.20000001788139,
+          "total": 523.9000000059605,
+          "largestTimerGap": 523.9000000059605,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        }
+      ],
+      "queryHashes": []
+    },
+    {
+      "config": {
+        "reopens": 3,
+        "baseline": true,
+        "label": "paired-before-b"
+      },
+      "runtime": {
+        "node": "24.22.0",
+        "acorn": "8.18.0",
+        "ada": "4.0.0",
+        "amaro": "1.1.11",
+        "ares": "1.34.8",
+        "brotli": "1.2.0",
+        "cldr": "48.0",
+        "icu": "78.2",
+        "llhttp": "9.4.3",
+        "merve": "1.2.2",
+        "modules": "149",
+        "napi": "10",
+        "nbytes": "0.1.4",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.70.0",
+        "nghttp3": "",
+        "ngtcp2": "",
+        "openssl": "0.0.0",
+        "simdjson": "4.6.11",
+        "simdutf": "7.7.0",
+        "sqlite": "3.53.4",
+        "tz": "2026d",
+        "undici": "7.29.1",
+        "unicode": "17.0",
+        "uv": "1.52.1",
+        "uvwasi": "0.0.23",
+        "v8": "15.2.124.43-electron.0",
+        "zlib": "1.3.2.1-motley",
+        "zstd": "1.6.0",
+        "electron": "44.9.0",
+        "chrome": "152.0.7977.167"
+      },
+      "sourceHashes": {
+        "fuzzy-explorer": "565abd7f2a59f8aac93ece4afe252f56684706fc9f16c146283dd10f638b4673",
+        "fuzzy-files": "f67bed5b767b35268c4c25587f5e5dcd502417485123cc2bd9ff5e8ab78bedea",
+        "proximity": "37b7e2ce8eab720123e37b4f82c6f4282061ce9a4f9cfb69eb951dd6fd8f8525",
+        "select-list": "ea34b77be7f108906d02f980df62c434502c852e8594b0f95637e0ceceb736b1",
+        "select-list-model": "9b8106fb02098569c89c11ccfcbd7976c6640b66d0098975a497c8d95df9c927",
+        "dialog-source": "3299ce368d9653779f53be05063651a3e80e49713c42b39e5cf1577a03b8ae0a",
+        "input-dialog": "0eb3e175ec2ab8212795ba609aa1df973f353a8d562ebbc4d87663c95c80c726"
+      },
+      "driverHash": "7b968327c8ba229397d2c50350d65db5a7bb67140f593437e295159d535f2723",
+      "corpusHashes": {
+        "explorer": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484",
+        "project": "4d74fd0199762b6b625388a2c0164f6cc22ad46ca9541624a2aee8c53730a756"
+      },
+      "samples": [
+        {
+          "package": "fuzzy-explorer",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 18.19999998807907,
+          "total": 59.69999998807907,
+          "largestTimerGap": 59.69999998807907,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 8.599999994039536,
+          "total": 26.299999982118607,
+          "largestTimerGap": 26.299999982118607,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 8.599999994039536,
+          "total": 24.80000001192093,
+          "largestTimerGap": 24.80000001192093,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-explorer",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 8.399999976158142,
+          "total": 23.799999982118607,
+          "largestTimerGap": 23.799999982118607,
+          "count": 30253,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "e7befa8a25028a8094c021653b812d106b5debbd8277ccb14d9ecf4239a8d484"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 0,
+          "kind": "first",
+          "synchronousShow": 4813,
+          "total": 6092.5999999940395,
+          "largestTimerGap": 6092.5999999940395,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 1,
+          "kind": "reopen",
+          "synchronousShow": 29.900000005960464,
+          "total": 1475.5999999940395,
+          "largestTimerGap": 1475.699999988079,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 2,
+          "kind": "reopen",
+          "synchronousShow": 30.899999976158142,
+          "total": 1380.699999988079,
+          "largestTimerGap": 1380.699999988079,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        },
+        {
+          "package": "fuzzy-files",
+          "sample": 3,
+          "kind": "reopen",
+          "synchronousShow": 36.599999994039536,
+          "total": 1304.0999999940395,
+          "largestTimerGap": 1304.0999999940395,
+          "count": 500000,
+          "recentCount": 0,
+          "renderedRows": 100,
+          "orderedIdsHash": "ab73603f438733475e830a7872e59d3eff21adf29a78398462bfdaa1e5ae300b",
+          "distanceHash": "d02b1d6aeb796267a03919f6f762c6b23ffba36d423b7fe7fb22df681a9e673e"
+        }
+      ],
+      "queryHashes": []
+    }
+  ]
+}

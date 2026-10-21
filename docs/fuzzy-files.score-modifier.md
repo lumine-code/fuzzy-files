@@ -7,7 +7,7 @@ Adjusts how the file finder ranks its results, so a package can push the files i
 | Version     | `1.0.0`                                                |
 | Provided by | `provideFuzzyFilesScoreModifier()` returning `{ add }` |
 | Consumed by | `consumeFuzzyFilesScoreModifier(service)`              |
-| Owner       | `fuzzy-files` (bundled)                                |
+| Owner       | `fuzzy-files`                                          |
 
 **No package consumes this today.** It exists so recency, git status, open editors, or a language server's notion of relatedness can influence the ordering without `fuzzy-files` knowing about any of them.
 
@@ -41,6 +41,10 @@ type Item = {
 `add` registers a modifier and returns a `Disposable` that removes it. The modifier receives the score so far and the item, and returns the new score. **Higher scores rank first.**
 
 `item` carries at least `fPath`, the project-relative path, and `distance`, which `fuzzy-files` has already folded into the base score.
+
+The reference is the pane item from which the finder was invoked, captured before the panel takes focus. Any pane item with an absolute filesystem path participates, including PDFs, images and notebooks; an item without such a path has neutral distance `1`. Activating another pane does not replace this reference. Moving the original item's path refreshes the distances in its window.
+
+Distances preserve the previous relative-path-depth weighting, with cached calculations shared by directories and source paths. Ranking no longer allocates a relative-path string for every candidate on every opening. File actions still calculate the selected path string when needed. Source changes clear the caches, and a different reference directory creates a new cache.
 
 ## Minimal example
 

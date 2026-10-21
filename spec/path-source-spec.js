@@ -108,7 +108,7 @@ describe("the shared finder and path-completion source", () => {
     const nestedEditor = await lumine.workspace.open(path.join(root, "sub", "other.js"));
     await main.loadListSource();
     const asset = main.itemsByPath.get(path.join(root, "asset.png"));
-    expect(asset.rPath).toBe(path.join("..", "asset.png"));
+    expect(asset.distance).toBe(2);
     expect((await request("// ./asset", editor))[0].text).toBe("./asset.png");
     expect((await request("// ../asset", nestedEditor))[0].text).toBe("../asset.png");
     nestedEditor.destroy();

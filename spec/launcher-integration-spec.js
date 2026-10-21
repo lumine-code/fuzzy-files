@@ -21,7 +21,6 @@ describe("fuzzy-files native Launcher flow", () => {
       aPath: selectedPath,
       pPath: scratch,
       fPath: "selected.txt",
-      rPath: "selected.txt",
       distance: 1,
     };
     spyOn(main, "loadListSource").and.resolveTo({ items: [item] });

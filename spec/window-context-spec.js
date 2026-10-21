@@ -67,14 +67,19 @@ describe("window-local file finders", () => {
     await remote.host.show({ query: "first" });
     const unchangedRemote = remote.model.workerPreparation;
     syncList.calls.reset();
-    await workspace.open(path.join(directory, "child", "scratch.txt"), {
+    const nested = await workspace.open(path.join(directory, "child", "scratch.txt"), {
       pane: mainWindow.getEditorContainer().getActivePane(),
     });
     await local.model.queryWork?.promise;
-    expect(syncList).toHaveBeenCalled();
-    expect(syncList.calls.allArgs().every(([, window]) => window === mainWindow)).toBe(true);
-    expect(local.model.getFilteredItems()[0].rPath).toBe(path.join("..", "second.txt"));
+    expect(syncList).not.toHaveBeenCalled();
+    expect(local.model.getFilteredItems()[0].distance).toBe(1);
     expect(remote.model.workerPreparation).toBe(unchangedRemote);
-    expect(remote.model.getFilteredItems()[0].rPath).toBe("first.txt");
+    expect(remote.model.getFilteredItems()[0].distance).toBe(1);
+    local.host.hide();
+    await lumine.commands.dispatch(nested.getElement(), "fuzzy-files:toggle");
+    await local.model.setQuery("second");
+    expect(local.opening.item).toBe(nested);
+    expect(local.model.getFilteredItems()[0].distance).toBe(2);
+    expect(remote.model.workerPreparation).toBe(unchangedRemote);
   });
 });

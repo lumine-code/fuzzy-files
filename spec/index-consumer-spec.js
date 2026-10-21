@@ -155,7 +155,7 @@ describe("fuzzy-files as a file-index consumer", () => {
     expect(main.infoLine()).toBe("2 files in 1 project");
   });
 
-  it("relativizes against the active editor", async () => {
+  it("computes proximity to the active pane item without storing relative strings", async () => {
     await activate();
     const editorPath = path.join(dir, "sub", "gamma.js");
     fs.mkdirSync(path.dirname(editorPath), { recursive: true });
@@ -165,8 +165,18 @@ describe("fuzzy-files as a file-index consumer", () => {
     main.materialize();
     main.relativize();
     const alpha = main.itemsByPath.get(path.join(dir, "alpha.js"));
-    expect(alpha.rPath).toBe(path.join("..", "alpha.js"));
+    expect(alpha.rPath).toBeUndefined();
     expect(alpha.distance).toBe(2);
+  });
+
+  it("publishes the initial settled snapshot once", async () => {
+    await activate("fuzzy-files:clear-recent");
+    const host = main.ensureFinder();
+    const build = spyOn(host.getModel().model, "_buildRecords").and.callThrough();
+    await host.show();
+    expect(build.calls.count()).toBe(1);
+    expect(host.getModel().getItemCount()).toBe(3);
+    expect(host.getModel().isLoading()).toBe(false);
   });
 
   it("preserves depth weighting and modifier order after path metadata is prepared", async () => {
