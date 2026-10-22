@@ -41,6 +41,18 @@ describe("file metadata worker", () => {
     expect(index.worker.exitCode !== null || index.worker.signalCode !== null).toBe(true);
   });
 
+  it("rejects queued cached snapshots after the helper closes", async () => {
+    create();
+    await index.apply([file("a.js")], []);
+    const snapshot = await index.snapshot(null);
+    const pending = index.snapshot(null, snapshot);
+    const rejection = expectAsync(pending).toBeRejected();
+    await index.close();
+    await rejection;
+    await expectAsync(index.snapshot(null, snapshot)).toBeRejected();
+    await expectAsync(index.apply([], [])).toBeRejected();
+  });
+
   it("retains immutable snapshots and processes removals, reinsertion and slot reuse", async () => {
     create();
     await index.apply([file("c.js"), file("a.js"), file("b.js")], []);

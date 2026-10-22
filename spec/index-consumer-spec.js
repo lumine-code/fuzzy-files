@@ -314,4 +314,16 @@ describe("fuzzy-files as a file-index consumer", () => {
     await main.selectList.runAction("fuzzy-files:refresh-index");
     expect(lumine.project.refreshFilePaths).toHaveBeenCalled();
   });
+
+  it("recreates a failed metadata helper when the user refreshes the finder", async () => {
+    jasmine.useRealClock();
+    await activate();
+    const previous = main.fileIndex;
+    await previous.close(new Error("metadata helper failed"));
+    await main.refresh();
+    await main.selectList.reload();
+    expect(main.fileIndex).not.toBe(previous);
+    expect(main.selectList.getItemCount()).toBe(3);
+    expect(main.selectList.getStatus()?.type).not.toBe("error");
+  });
 });
