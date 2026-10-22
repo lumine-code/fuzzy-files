@@ -19,6 +19,28 @@ describe("file metadata worker", () => {
     return matcher;
   }
 
+  it("does not reuse a snapshot from a replaced metadata worker", async () => {
+    create();
+    await index.apply([file("old.js")], []);
+    const previous = await index.snapshot(null);
+    await index.close();
+    create();
+    await index.apply([file("new.js")], []);
+    expect(index.revision).toBe(previous.revision);
+    expect((await index.snapshot(null, previous)).items.map((item) => item.nPath)).toEqual([
+      "new.js",
+    ]);
+  });
+
+  it("lets repeated close calls await the same process termination", async () => {
+    create();
+    const first = index.close();
+    const second = index.close();
+    expect(second).toBe(first);
+    await second;
+    expect(index.worker.exitCode !== null || index.worker.signalCode !== null).toBe(true);
+  });
+
   it("retains immutable snapshots and processes removals, reinsertion and slot reuse", async () => {
     create();
     await index.apply([file("c.js"), file("a.js"), file("b.js")], []);

@@ -250,6 +250,65 @@ describe("fuzzy-files as a file-index consumer", () => {
     }
   });
 
+  it("does not publish an obsolete snapshot when exclusions replace the worker during preparation", async () => {
+    jasmine.useRealClock();
+    await activate("fuzzy-files:clear-recent");
+    const host = main.ensureFinder(),
+      list = host.getModel();
+    const prepare = list.prepareItems.bind(list);
+    let release, began;
+    const gate = new Promise((resolve) => {
+      release = resolve;
+    });
+    const started = new Promise((resolve) => {
+      began = resolve;
+    });
+    let first = true;
+    spyOn(list, "prepareItems").and.callFake(async (...args) => {
+      if (first) {
+        first = false;
+        began();
+        await gate;
+      }
+      return prepare(...args);
+    });
+    const opening = host.show();
+    await started;
+    lumine.config.set("fuzzy-files.ignoredNames", ["alpha.js"]);
+    await main.whenPrepared();
+    release();
+    await opening;
+    expect(list.getItems().map((item) => item.nPath)).toEqual(["beta.js", "gamma.js"]);
+  });
+
+  it("cancels a pending refresh when the package deactivates", async () => {
+    jasmine.useRealClock();
+    await activate();
+    const list = main.ensureFinder().getModel();
+    const prepare = list.model.prepareItems.bind(list.model);
+    let release, began, signal;
+    const gate = new Promise((resolve) => {
+      release = resolve;
+    });
+    const started = new Promise((resolve) => {
+      began = resolve;
+    });
+    spyOn(list.model, "prepareItems").and.callFake(async (items, options) => {
+      signal = options.signal;
+      began();
+      await gate;
+      return prepare(items, options);
+    });
+    const refresh = main.syncList();
+    await started;
+    await lumine.packages.deactivatePackage("fuzzy-files");
+    release();
+    await refresh;
+    expect(signal.aborted).toBe(true);
+    expect(main.fileIndex).toBeNull();
+    expect(main.finders.size).toBe(0);
+  });
+
   it("refreshes the shared index rather than a cache of its own", async () => {
     await activate();
     await main.selectList.runAction("fuzzy-files:refresh-index");
