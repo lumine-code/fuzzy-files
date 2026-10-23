@@ -32,6 +32,28 @@ describe("file metadata worker", () => {
     ]);
   });
 
+  for (const expandedCandidate of [false, true]) {
+    it(`keeps relative paths intact when case folding expands a root (expanded candidate=${expandedCandidate})`, async () => {
+      const project = path.resolve("/İ-project");
+      const observed = expandedCandidate ? path.resolve("/i\u0307-project") : project;
+      index = new FileIndex({
+        roots: [{ path: project, paths: [project] }],
+        rules: [],
+        caseInsensitive: true,
+      });
+      const names = ["alpha.js", path.join("dir", "beta.js")];
+      await index.apply(
+        names.map((name) => path.join(observed, name)),
+        [],
+      );
+      const snapshot = await index.snapshot(null);
+      expect(snapshot.items.map((item) => item.fPath)).toEqual(names);
+      expect(snapshot.items.map((item) => item.aPath)).toEqual(
+        names.map((name) => path.join(project, name)),
+      );
+    });
+  }
+
   it("lets repeated close calls await the same process termination", async () => {
     create();
     const first = index.close();
