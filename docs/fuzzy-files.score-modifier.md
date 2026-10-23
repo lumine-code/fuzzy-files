@@ -2,14 +2,14 @@
 
 Adjusts how the file finder ranks its results, so a package can push the files it knows are relevant to the top.
 
-|             |                                                        |
-| ----------- | ------------------------------------------------------ |
-| Version     | `1.0.0`                                                |
-| Provided by | `provideFuzzyFilesScoreModifier()` returning `{ add }` |
-| Consumed by | `consumeFuzzyFilesScoreModifier(service)`              |
-| Owner       | `fuzzy-files`                                          |
+|             |                                                                    |
+| ----------- | ------------------------------------------------------------------ |
+| Version     | `1.0.0`                                                            |
+| Provided by | `provideFuzzyFilesScoreModifier()` returning `{ add, invalidate }` |
+| Consumed by | `consumeFuzzyFilesScoreModifier(service)`                          |
+| Owner       | `fuzzy-files`                                                      |
 
-**No package consumes this today.** It exists so recency, git status, open editors, or a language server's notion of relatedness can influence the ordering without `fuzzy-files` knowing about any of them.
+Recency, git status, open editors, or a language server's notion of relatedness can influence the ordering without the finder knowing about the provider's domain.
 
 ## Registration
 
@@ -30,6 +30,7 @@ In your `package.json`:
 ```ts
 type ScoreModifierService = {
   add(modifier: (score: number, item: Item) => number): Disposable;
+  invalidate(modifier: (score: number, item: Item) => number): Promise<void>;
 };
 
 type Item = {
@@ -39,6 +40,8 @@ type Item = {
 ```
 
 `add` registers a modifier and returns a `Disposable` that removes it. The modifier receives the score so far and the item, and returns the new score. **Higher scores rank first.**
+
+Adding or removing a modifier refreshes each existing finder's scores. Call `await service.invalidate(modifier)` when state captured by a registered function changes; an unregistered function is ignored. Invalidation preserves prepared text and the existing matching worker. New source snapshots automatically invalidate scores, including when reference-directory changes replace proximity weights.
 
 `item` carries at least `fPath`, the project-relative path, and `distance`, which `fuzzy-files` has already folded into the base score.
 
@@ -51,10 +54,12 @@ Distances preserve the previous relative-path-depth weighting, with cached calcu
 ```js
 module.exports = {
   consumeFuzzyFilesScoreModifier(service) {
-    return service.add((score, item) => {
+    const modifier = (score, item) => {
       // Float recently edited files to the top.
       return this.recentPaths.has(item.fPath) ? score * 2 : score;
-    });
+    };
+    // Retain the function to call service.invalidate(modifier) when recentPaths changes.
+    return service.add(modifier);
   },
 };
 ```
@@ -65,7 +70,7 @@ Modifiers run **after** the built-in ranking, which already divides the fuzzy-ma
 
 They are applied in registration order, each receiving the previous one's output, so several packages compose rather than compete. That also means a modifier returning a constant destroys every ranking decision made before it. Multiply or add a bounded amount; do not replace.
 
-The modifier runs **once per candidate on every keystroke**, so it must be synchronous and cheap. Precompute whatever you need — a `Set` of interesting paths — and only look it up here.
+The modifier runs for matching candidates when a query's adjusted scores are first computed or explicitly invalidated. Revisiting a cached query reuses its scores and ordering. The function must be synchronous and cheap. Precompute whatever you need, such as a `Set` of interesting paths, and invalidate the modifier when that state changes.
 
 Returning `NaN` or a non-number silently sinks the item to the bottom, since the comparison fails. Guard your arithmetic.
 

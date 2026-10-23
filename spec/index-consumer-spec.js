@@ -250,6 +250,41 @@ describe("fuzzy-files as a file-index consumer", () => {
     }
   });
 
+  it("invalidates registered modifiers only when their state or registration changes", async () => {
+    jasmine.useRealClock();
+    await activate();
+    const list = main.ensureFinder().getModel();
+    await list.setQuery("a");
+    const preparation = list.workerPreparation;
+    const index = main.fileIndex;
+    const service = main.provideFuzzyFilesScoreModifier();
+    let wanted = "gamma.js";
+    const modifier = jasmine
+      .createSpy("modifier")
+      .and.callFake((score, item) => (item.nPath === wanted ? score : 0));
+    const registration = service.add(modifier);
+    try {
+      await list.queryWork?.promise;
+      expect(list.getFilteredItems().map((item) => item.nPath)).toEqual(["gamma.js"]);
+      const calls = modifier.calls.count();
+      await list.setQuery("a");
+      expect(modifier.calls.count()).toBe(calls);
+      wanted = "alpha.js";
+      await service.invalidate(modifier);
+      expect(list.getFilteredItems().map((item) => item.nPath)).toEqual(["alpha.js"]);
+      expect(list.workerPreparation).toBe(preparation);
+      expect(main.fileIndex).toBe(index);
+      const updatedCalls = modifier.calls.count();
+      await service.invalidate(() => 0);
+      expect(modifier.calls.count()).toBe(updatedCalls);
+    } finally {
+      registration.dispose();
+      await list.queryWork?.promise;
+    }
+    expect(list.getMatchCount()).toBe(3);
+    expect(main.scoreModifiers).not.toContain(modifier);
+  });
+
   it("does not publish an obsolete snapshot when exclusions replace the worker during preparation", async () => {
     jasmine.useRealClock();
     await activate("fuzzy-files:clear-recent");
