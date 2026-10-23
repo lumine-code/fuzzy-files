@@ -43,7 +43,7 @@ describe("File proximity command context", () => {
   it("uses the invoking non-text item even when a different pane is active", async () => {
     const left = lumine.workspace.getActivePane();
     const origin = addItem(left, path.join(root, "near", "document.pdf"));
-    const right = left.splitRight({ copyActiveItem: false });
+    const right = left.splitRight();
     addItem(right, path.join(root, "far", "image.png"));
     right.activate();
     await lumine.commands.dispatch(origin, "fuzzy-files:toggle");
