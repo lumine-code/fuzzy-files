@@ -59,6 +59,45 @@ describe("fuzzy-files", () => {
     expect(provider.selector).toBeUndefined();
   });
 
+  it("rejects oversized line context before reading source or consulting the index", async () => {
+    editor.setText("x".repeat(65537) + " './somedir/");
+    editor.setCursorBufferPosition([0, Infinity]);
+    const read = spyOn(editor, "getTextInRange").and.throwError("unbounded path context");
+    const index = spyOn(main, "observeIndex").and.callThrough();
+    try {
+      expect(
+        await provider.getSuggestions({
+          editor,
+          bufferPosition: editor.getCursorBufferPosition(),
+          scopeDescriptor: { getScopesArray: () => ["source.js"] },
+          prefix: "",
+        }),
+      ).toEqual([]);
+      expect(read).not.toHaveBeenCalled();
+      expect(index).not.toHaveBeenCalled();
+    } finally {
+      read.and.callThrough();
+    }
+  });
+
+  it("reads complete context only once across matching scopes and honors its configured budget", async () => {
+    editor.setText("const item = require('./somedir/");
+    editor.setCursorBufferPosition([0, Infinity]);
+    const request = {
+      editor,
+      bufferPosition: editor.getCursorBufferPosition(),
+      scopeDescriptor: { getScopesArray: () => ["source.js"] },
+      prefix: "",
+    };
+    const read = spyOn(editor, "getTextInRange").and.callThrough();
+    await provider.getSuggestions(request);
+    expect(read).toHaveBeenCalledTimes(1);
+    read.calls.reset();
+    lumine.config.set("fuzzy-files.pathCompletion.maximumContextLength", 10);
+    expect(await provider.getSuggestions(request)).toEqual([]);
+    expect(read).not.toHaveBeenCalled();
+  });
+
   it("reads the same filtered project files as the finder", () => {
     const files = lumine.project.getFilePathsForRoot(projectDirectory);
     expect(files.some((filePath) => filePath.endsWith(path.join("somedir", "testfile.js")))).toBe(

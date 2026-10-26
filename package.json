@@ -94,6 +94,13 @@
           "type": "boolean",
           "default": true
         },
+        "maximumContextLength": {
+          "title": "Maximum Path Context",
+          "description": "Skip automatic path completion beyond this many UTF-16 units on the current line. Complete context is required to interpret quotes and custom regular expressions correctly; larger values cost more work. The JavaScript string limit always applies.",
+          "type": "integer",
+          "minimum": 1,
+          "default": 65536
+        },
         "suggestionPriority": {
           "title": "Suggestion Priority",
           "description": "Priority reported to the autocomplete service. Above the 2 a language server reports, so that an explicitly typed path outranks a general identifier list -- this provider only answers when a path prefix actually matched, so it never displaces anything otherwise.",
@@ -131,6 +138,7 @@
       "default": {
         "enabled": true,
         "normalizeSlashes": true,
+        "maximumContextLength": 65536,
         "suggestionPriority": 3,
         "imagePreview": false,
         "ignoreBuiltinScopes": false,

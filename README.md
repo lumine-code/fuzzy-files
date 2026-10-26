@@ -61,6 +61,8 @@ With `autocomplete` installed, path suggestions use the same project file list a
 
 Quotes delimit the whole path, preserving spaces, brackets, Unicode and legal filename punctuation. Inserted suggestions escape the enclosing quote, backslashes and `${` in backtick templates. Optional HTML attribute contexts decode character references for matching and encode inserted paths as entities. Bare paths accept spaces when the filename query is a literal prefix; brackets immediately surrounding a path delimit it, and a semicolon ends it. Completion reads only the current line before the cursor; C0 control characters, including tabs and physical line breaks in filenames, are unsupported.
 
+Automatic path completion applies a configurable context budget before reading that line prefix. When it is exceeded, the request is declined without reading text or starting the file index. A tail-only window could mistake an earlier quote or regular-expression literal for a new path, so context is never silently truncated.
+
 ## Services
 
 - [`fuzzy-files.score-modifier`](docs/fuzzy-files.score-modifier.md): provided to let other packages register functions that boost or penalize the score of search results.
