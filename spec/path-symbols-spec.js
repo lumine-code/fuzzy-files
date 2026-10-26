@@ -67,6 +67,7 @@ describe("path completion filename symbols", () => {
   }
 
   beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
     originalProjectPaths = lumine.project.getPaths();
     rootPath = fs.mkdtempSync(path.join(os.tmpdir(), "fuzzy-files-symbols-"));
     files = [];

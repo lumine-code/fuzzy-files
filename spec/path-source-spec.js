@@ -6,6 +6,7 @@ describe("the shared finder and path-completion source", () => {
   let main, provider, editor, root, callbacks, paths, disposed;
 
   beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
     root = fs.realpathSync.native(fs.mkdtempSync(path.join(os.tmpdir(), "fuzzy-files-source-")));
     callbacks = new Set();
     paths = [path.join(root, "current.js"), path.join(root, "asset.png")];

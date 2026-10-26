@@ -7,6 +7,7 @@ describe("fuzzy-files", () => {
   let projectDirectory;
 
   beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
     lumine.config.set("fuzzy-files.ignoredNames", ["tests"]);
     lumine.config.set("core.excludeVcsIgnoredPaths", false);
     jasmine.attachToDOM(lumine.workspace.getElement());

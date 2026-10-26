@@ -2,6 +2,7 @@ describe("lazy path completion imports", () => {
   let main, provider, editor;
 
   beforeEach(async () => {
+    await lumine.packages.activatePackage("language-text");
     jasmine.attachToDOM(lumine.workspace.getElement());
     main = (await lumine.packages.activatePackage("fuzzy-files")).mainModule;
     provider = main.provideAutocomplete();
